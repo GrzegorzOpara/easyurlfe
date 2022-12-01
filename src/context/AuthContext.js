@@ -10,7 +10,7 @@ export const AuthProvider = ({children}) => {
     
     let [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null)
     let [user, setUser] = useState(() => localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null)
-    // let [username, setUsername] = useState(() => localStorage.getItem('username') ? localStorage.getItem('username') : null)
+    let [username, setUsername] = useState(() => localStorage.getItem('username') ? localStorage.getItem('username') : null)
     let [loading, setLoading] = useState(true)
 
     // console.log('auth token:', authTokens)
@@ -21,6 +21,9 @@ export const AuthProvider = ({children}) => {
 
     let loginUser = async (e ) => {
         e.preventDefault()
+
+        setUsername(e.target.username.value)
+
         let response = await fetch('http://127.0.0.1:8000/api/token/', {
             method:'POST',
             headers:{
@@ -29,15 +32,13 @@ export const AuthProvider = ({children}) => {
             body:JSON.stringify({'username':e.target.username.value, 'password':e.target.password.value})
         })
         let data = await response.json()
-
+        
         if (response.status === 200) {
             setAuthTokens(data)
-            // setUsername('Nowa wartosc') //setUsername('e.target.username.value')
             setUser(jwt_decode(data.access))
-            // console.log("User: ", user)
-            // console.log("Username: ", username)
+            console.log("Username : ", username)
             localStorage.setItem('authTokens', JSON.stringify(data))
-            // localStorage.setItem('username', username)
+            localStorage.setItem('username', username)
             navigate('/')
         }
         else {
@@ -49,8 +50,9 @@ export const AuthProvider = ({children}) => {
         // console.log('Logout!')
         setAuthTokens(null)
         setUser(null)
+        setUsername(null)
         localStorage.removeItem('authTokens')
-        //localStorage.removeItem('username')
+        localStorage.removeItem('username')
         navigate('/login')
     }
     
@@ -109,7 +111,7 @@ export const AuthProvider = ({children}) => {
 
     let contextData = {
         user:user,
-        // username:username, 
+        username:username, 
         loginUser:loginUser,
         logoutUser:logoutUser,
         authTokens:authTokens
