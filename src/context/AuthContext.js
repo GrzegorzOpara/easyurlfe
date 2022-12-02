@@ -13,16 +13,14 @@ export const AuthProvider = ({children}) => {
     let [username, setUsername] = useState(() => localStorage.getItem('username') ? localStorage.getItem('username') : null)
     let [loading, setLoading] = useState(true)
 
-    // console.log('auth token:', authTokens)
-    // console.log('loading = ', loading)
-    // let [username, setUsername] = useState('Wyjsciowa wartosc') // => localStorage.getItem('username') ? localStorage.getItem('username') : null)
-
     const navigate = useNavigate()
 
-    let loginUser = async (e ) => {
+    let loginUser = async (e) => {    
         e.preventDefault()
-
-        setUsername(e.target.username.value)
+        
+        const val = e.target.username.value
+        setUsername(val)
+        localStorage.setItem('username', val)
 
         let response = await fetch('http://127.0.0.1:8000/api/token/', {
             method:'POST',
@@ -32,28 +30,25 @@ export const AuthProvider = ({children}) => {
             body:JSON.stringify({'username':e.target.username.value, 'password':e.target.password.value})
         })
         let data = await response.json()
-        
+
         if (response.status === 200) {
+            console.log('1')
             setAuthTokens(data)
             setUser(jwt_decode(data.access))
-            console.log("Username : ", username)
             localStorage.setItem('authTokens', JSON.stringify(data))
-            localStorage.setItem('username', username)
             navigate('/')
         }
         else {
+            console.log('2')
             navigate('/')
         }
     }
 
     let logoutUser = () => {
-        // console.log('Logout!')
         setAuthTokens(null)
         setUser(null)
-        setUsername(null)
         localStorage.removeItem('authTokens')
         localStorage.removeItem('username')
-        navigate('/login')
     }
     
     let updateToken = async () => {
@@ -72,12 +67,10 @@ export const AuthProvider = ({children}) => {
 
         if (response.status === 200) {
             setAuthTokens(data)
-            // console.log(authTokens)
             setUser(jwt_decode(data.access))
-            // console.log(user)
             localStorage.setItem('authTokens', JSON.stringify(data))   
-            // console.log('token updated')
         } else {
+            console.log('1')
             logoutUser()
         }
 
@@ -93,7 +86,6 @@ export const AuthProvider = ({children}) => {
     useEffect(() => {
 
         if (loading && authTokens) {
-            // // console.log('Wykonuje update tokenow na podst. refresh', authTokens?.refresh)
             updateToken()
         } else if (loading) {
             setLoading(false)
@@ -106,7 +98,8 @@ export const AuthProvider = ({children}) => {
         }, intervalCalc(14))
 
         return ()=> clearInterval(interval)
-
+    
+        // eslint-disable-next-line
     }, [authTokens, loading])
 
     let contextData = {

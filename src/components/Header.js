@@ -1,19 +1,53 @@
 import React, {useContext} from 'react'
 import { Link } from "react-router-dom";
 import { AuthContext } from '../context/AuthContext';
+import {
+    Button,
+    Form,
+    FormField,
+    TextInput,
+    Tag,
+    Text,
+    Box,
+  } from "grommet";
 
 const Header = () => {
-    let {user, username, logoutUser} = useContext(AuthContext)
+    let {user, username, loginUser, logoutUser} = useContext(AuthContext)
     return (
         <div>
-            <Link to={'/'}>Home Page</Link>
-            <span> | </span>
             {user ? (
-                <p onClick={logoutUser}>Logout</p>
+                <>
+                <Box justify = "end" direction="row-responsive">
+                    <Box pad='small'>
+                        <Tag value={username} />
+                    </Box>
+                    <Box pad='small'>
+                        <Button label={<Text size="medium">Logout</Text>} onClick={logoutUser} primary={true} />
+                    </Box>
+                </Box>
+                </>
             ) : (
-                <Link to={'/login'}>Login Page</Link>
+                <>
+                <Box pad='small' justify = "end" direction="row-responsive">
+                    <Form
+                    onSubmit={(event)=>loginUser(event)} >
+                        <Box direction="row">
+                            <FormField>
+                                <TextInput name="username" placeholder={<Text size="small"><i>Username</i></Text>}
+                                />
+                            </FormField>
+                            <FormField>
+                                <TextInput name="password" placeholder={<Text size="small"><i>Password</i></Text>} type='password'/>
+                            </FormField>
+                            <Box justify="center" pad="small">
+                                <Button label={<Text size="medium">Login</Text>} type="submit" primary={true} />
+                            </Box>
+                        </Box>
+                    </Form>
+                    </Box>
+                </>
             )}
-            {user && <p>Hello {username}</p>}
+            
         </div>
   )
 }

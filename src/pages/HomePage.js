@@ -4,10 +4,8 @@ import { AuthContext } from '../context/AuthContext'
 const HomePage = () => {
   let [urls, setUrls] = useState([])
   let {authTokens, logoutUser} = useContext(AuthContext)
-  // let [username, setUsername] = useState(() => localStorage.getItem('username') ? localStorage.getItem('username') : null)
 
   useEffect(() => {
-    // console.log('Wykonuje getUrls z tokenem: ')
     getUrls()
   }, [])
 
@@ -23,23 +21,19 @@ const HomePage = () => {
 
     let data = await response.json()
 
-    console.log(data)
-
     if (response.status === 200) {
-      // console.log('getUrls = 200')
       setUrls(data)
     } else if (response.statusText === 'Unauthorized') {
-      // console.log('getUrls != 200')
+      console.log('2')
       logoutUser()
     }
   }
 
   return (
     <div>
-        <p>This are urls:</p>
         <ul>
           {urls.map(url => (
-            <li key={url.id}>{url.url_name}</li>
+            <li key={url.id}>{url.url_link} - {url.url_name} - {url.url_desc}</li>
           ))}
         </ul>
     </div>
