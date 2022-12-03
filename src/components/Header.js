@@ -1,5 +1,4 @@
 import React, {useContext} from 'react'
-import { Link } from "react-router-dom";
 import { AuthContext } from '../context/AuthContext';
 import { Button, Form, FormField, TextInput, Tag, Text, Box } from "grommet";
 
@@ -15,11 +14,6 @@ const Header = () => {
                     </Box>
                     <Box pad='small'>
                         <Button label={<Text size="medium">Logout</Text>} onClick={logoutUser} primary={true} />
-                    </Box>
-                </Box>
-                <Box fill direction="row-responsive">
-                    <Box pad="small">
-                            <TextInput plain placeholder="Search url"></TextInput>
                     </Box>
                 </Box>
                 </>
