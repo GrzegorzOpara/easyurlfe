@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { AuthContext } from '../context/AuthContext'
+import { Anchor, Table, Box, TableHeader, TableBody, TableCell, TableRow } from "grommet";
 
 const HomePage = () => {
   let [urls, setUrls] = useState([])
@@ -24,19 +25,32 @@ const HomePage = () => {
     if (response.status === 200) {
       setUrls(data)
     } else if (response.statusText === 'Unauthorized') {
-      console.log('2')
       logoutUser()
     }
   }
 
   return (
-    <div>
-        <ul>
-          {urls.map(url => (
-            <li key={url.id}>{url.url_link} - {url.url_name} - {url.url_desc}</li>
-          ))}
-        </ul>
-    </div>
+    
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableCell scope="col" border="bottom">Link</TableCell>
+          <TableCell scope="col" border="bottom">Name</TableCell>
+          <TableCell scope="col" border="bottom">Description</TableCell>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {urls.map(url => (
+          <>
+          <TableRow key={url.id}>
+            <TableCell scope='row'><Anchor href={url.url_link} label={url.url_link} /></TableCell>
+            <TableCell scope='row'>{url.url_name}</TableCell>
+            <TableCell scope='row'>{url.url_desc}</TableCell>
+          </TableRow>
+          </>
+        ))}
+      </TableBody>
+    </Table>
   )
 }
 

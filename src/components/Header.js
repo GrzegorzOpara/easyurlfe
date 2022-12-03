@@ -1,15 +1,7 @@
 import React, {useContext} from 'react'
 import { Link } from "react-router-dom";
 import { AuthContext } from '../context/AuthContext';
-import {
-    Button,
-    Form,
-    FormField,
-    TextInput,
-    Tag,
-    Text,
-    Box,
-  } from "grommet";
+import { Button, Form, FormField, TextInput, Tag, Text, Box } from "grommet";
 
 const Header = () => {
     let {user, username, loginUser, logoutUser} = useContext(AuthContext)
@@ -19,10 +11,15 @@ const Header = () => {
                 <>
                 <Box justify = "end" direction="row-responsive">
                     <Box pad='small'>
-                        <Tag value={username} />
+                        <Tag value={<Text size="medium">{username}</Text>}/>
                     </Box>
                     <Box pad='small'>
                         <Button label={<Text size="medium">Logout</Text>} onClick={logoutUser} primary={true} />
+                    </Box>
+                </Box>
+                <Box fill direction="row-responsive">
+                    <Box pad="small">
+                            <TextInput plain placeholder="Search url"></TextInput>
                     </Box>
                 </Box>
                 </>
@@ -33,8 +30,7 @@ const Header = () => {
                     onSubmit={(event)=>loginUser(event)} >
                         <Box direction="row">
                             <FormField>
-                                <TextInput name="username" placeholder={<Text size="small"><i>Username</i></Text>}
-                                />
+                                <TextInput name="username" placeholder={<Text size="small"><i>Username</i></Text>}/>
                             </FormField>
                             <FormField>
                                 <TextInput name="password" placeholder={<Text size="small"><i>Password</i></Text>} type='password'/>
