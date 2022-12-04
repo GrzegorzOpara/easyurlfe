@@ -5,8 +5,6 @@ import { Anchor, Form, FormField, Table, Text, Box, TableHeader, TableBody, Tabl
 export const HomePage = () => {
   let [urls, setUrls] = useState([])
   let {authTokens, logoutUser} = useContext(AuthContext)
-  let [editing, setEditing] = useState(false)
-  let [editedRecord, setEditedRecord] = useState()
 
   let getUrls = async(e) => {
     let query = e ? e : ''
@@ -75,54 +73,6 @@ export const HomePage = () => {
       }
     }
     
-    let generateEdit = async(id) => {      
-
-      let response = await fetch('http://127.0.0.1:8000/api/urls/' + id + '/', {
-        method: 'GET',
-        headers: {
-          'Content-Type':'application/json',
-          'Authorization':'Bearer ' + String(authTokens.access)
-        }})
-  
-      let data = await response.json()
-      
-      if (response.status === 200) {
-        console.log('generateEdit successfull')
-        console.log(data)
-        setEditedRecord(data)
-        setEditing(false)        
-      } else {
-        console.log('Error generating editing form!')
-      }
-    }
-
-    let editUrl = async(e) => {
-      //e.preventDefault()
-
-      let response = await fetch('http://127.0.0.1:8000/api/urls/' + editedRecord.id + '/', {
-        method: 'PUT',
-        headers: {
-          'Content-Type':'application/json',
-          'Authorization':'Bearer ' + String(authTokens.access)
-        },
-        body:JSON.stringify({ 
-          'url_link':e.target.url_link.value,
-          'url_name':e.target.url_name.value,
-          'url_desc':e.target.url_desc.value})
-        })
-
-      await response.json()
-
-      if (response.status === 200) {
-        getUrls()
-        e.target.reset();
-        setEditing(false)    
-
-      } else {
-        console.log('Error editing new entry!')
-      }
-    }
-
     useEffect(() => {
       getUrls()
     }, [])  
@@ -135,13 +85,13 @@ export const HomePage = () => {
       </Box>
     </Box>
     <Box pad='small' direction="row-responsive">
-    <Form onSubmit={editing ? event=>editUrl(event): event=>addUrl(event)}>
+    <Form onSubmit={event=>addUrl(event)}>
       <Box direction='row'>
-        <FormField><TextInput value={editing && editedRecord.id ? editedRecord.url_link : ""} name="url_link" placeholder={<Text size="small">url</Text>}></TextInput></FormField>
-        <FormField><TextInput value={editing && editedRecord.id ? editedRecord.url_name : ""} name="url_name" placeholder={<Text size="small">name</Text>}></TextInput></FormField>
-        <FormField><TextInput value={editing && editedRecord.id ? editedRecord.url_desc : ""} name="url_desc" placeholder={<Text size="small">description</Text>}></TextInput></FormField>
+        <FormField><TextInput name="url_link" placeholder={<Text size="small">url</Text>}></TextInput></FormField>
+        <FormField><TextInput name="url_name" placeholder={<Text size="small">name</Text>}></TextInput></FormField>
+        <FormField><TextInput name="url_desc" placeholder={<Text size="small">description</Text>}></TextInput></FormField>
         <Box justify="center" pad="small">
-          <Button label={<Text size="medium">{editing? 'edit': 'add'}</Text>} type="submit" primary={false} />
+          <Button label={<Text size="medium">add</Text>} type="submit" primary={false} />
         </Box>
       </Box>    
     </Form>
@@ -161,7 +111,6 @@ export const HomePage = () => {
             <TableCell scope='row'><Anchor href={url.url_link} label={url.url_link} /></TableCell>
             <TableCell scope='row'>{url.url_name}</TableCell>
             <TableCell scope='row'>{url.url_desc}</TableCell>
-            <TableCell scope='row'><Button label={<Text size="small">Edit</Text>} onClick={() => generateEdit(url.id)}></Button></TableCell>
             <TableCell scope='row'><Button label={<Text size="small">Delete</Text>} onClick={() => deleteUrl(url.id)}></Button></TableCell>
           </TableRow>
           </>
