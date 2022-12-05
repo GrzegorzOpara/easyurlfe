@@ -4,6 +4,8 @@ import { Anchor, Form, FormField, Table, Text, Box, TableHeader, TableBody, Tabl
 
 export const HomePage = () => {
   let [urls, setUrls] = useState([])
+  let [editedRecord, setEditedRecord] = useState([])
+  let [editing, setEditing] = useState(false)
   let {authTokens, logoutUser} = useContext(AuthContext)
 
   let getUrls = async(e) => {
@@ -85,7 +87,7 @@ export const HomePage = () => {
       </Box>
     </Box>
     <Box pad='small' direction="row-responsive">
-    <Form onSubmit={event=>addUrl(event)}>
+    <Form onSubmit={editing ? event=>editUrl(event) : event=>addUrl(event)}>
       <Box direction='row'>
         <FormField><TextInput name="url_link" placeholder={<Text size="small">url</Text>}></TextInput></FormField>
         <FormField><TextInput name="url_name" placeholder={<Text size="small">name</Text>}></TextInput></FormField>
@@ -112,6 +114,7 @@ export const HomePage = () => {
             <TableCell scope='row'>{url.url_name}</TableCell>
             <TableCell scope='row'>{url.url_desc}</TableCell>
             <TableCell scope='row'><Button label={<Text size="small">Delete</Text>} onClick={() => deleteUrl(url.id)}></Button></TableCell>
+            <TableCell scope='row'><Button label={<Text size="small">Edit</Text>} onClick={() => deleteUrl(url.id)}></Button></TableCell>
           </TableRow>
           </>
         ))}
