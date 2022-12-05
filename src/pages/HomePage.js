@@ -74,7 +74,16 @@ export const HomePage = () => {
         console.log('Error adding new entry!')
       }
     }
+
+    let getEditedRecord = async(e) => {
+      setEditing(true)
+
+    }
     
+    let editUrl = async(e) => {
+
+    }
+
     useEffect(() => {
       getUrls()
     }, [])  
@@ -92,8 +101,9 @@ export const HomePage = () => {
         <FormField><TextInput name="url_link" placeholder={<Text size="small">url</Text>}></TextInput></FormField>
         <FormField><TextInput name="url_name" placeholder={<Text size="small">name</Text>}></TextInput></FormField>
         <FormField><TextInput name="url_desc" placeholder={<Text size="small">description</Text>}></TextInput></FormField>
-        <Box justify="center" pad="small">
-          <Button label={<Text size="medium">add</Text>} type="submit" primary={false} />
+        <Box justify="center" pad="small" direction="row">
+          <Button pad="small" label={<Text size="medium">{editing ? 'save': 'add'}</Text>} type="submit" primary={false} />
+          {editing ? <Button pad="small" label={<Text size="medium">cancel</Text>} primary={false} /> : null}
         </Box>
       </Box>    
     </Form>
@@ -114,7 +124,7 @@ export const HomePage = () => {
             <TableCell scope='row'>{url.url_name}</TableCell>
             <TableCell scope='row'>{url.url_desc}</TableCell>
             <TableCell scope='row'><Button label={<Text size="small">Delete</Text>} onClick={() => deleteUrl(url.id)}></Button></TableCell>
-            <TableCell scope='row'><Button label={<Text size="small">Edit</Text>} onClick={() => deleteUrl(url.id)}></Button></TableCell>
+            <TableCell scope='row'><Button label={<Text size="small">Edit</Text>} onClick={(e) => getEditedRecord(e)}></Button></TableCell>
           </TableRow>
           </>
         ))}
