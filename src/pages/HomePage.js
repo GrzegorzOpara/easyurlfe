@@ -77,11 +77,18 @@ export const HomePage = () => {
 
     let getEditedRecord = async(e) => {
       setEditing(true)
-
+      setEditedRecord(e.target.value)
+      console.log(editedRecord)
     }
     
     let editUrl = async(e) => {
 
+    }
+    
+   
+    let editRecord = async(e) => {
+      const newRecord = {...editedRecord, url_link: e.target.value}
+      setEditedRecord(newRecord)   
     }
 
     useEffect(() => {
@@ -98,9 +105,9 @@ export const HomePage = () => {
     <Box pad='small' direction="row-responsive">
     <Form onSubmit={editing ? event=>editUrl(event) : event=>addUrl(event)}>
       <Box direction='row'>
-        <FormField><TextInput name="url_link" placeholder={<Text size="small">url</Text>}></TextInput></FormField>
-        <FormField><TextInput name="url_name" placeholder={<Text size="small">name</Text>}></TextInput></FormField>
-        <FormField><TextInput name="url_desc" placeholder={<Text size="small">description</Text>}></TextInput></FormField>
+        <FormField><TextInput name="url_link" value={editing ? editedRecord.url_link : '' } onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">url</Text>}></TextInput></FormField>
+        <FormField><TextInput name="url_name" value={editing ? editedRecord.url_name : '' } placeholder={<Text size="small">name</Text>}></TextInput></FormField>
+        <FormField><TextInput name="url_desc" value={editing ? editedRecord.url_desc : '' } placeholder={<Text size="small">description</Text>}></TextInput></FormField>
         <Box justify="center" pad="small" direction="row">
           <Button pad="small" label={<Text size="medium">{editing ? 'save': 'add'}</Text>} type="submit" primary={false} />
           {editing ? <Button pad="small" label={<Text size="medium">cancel</Text>} primary={false} /> : null}
@@ -124,7 +131,7 @@ export const HomePage = () => {
             <TableCell scope='row'>{url.url_name}</TableCell>
             <TableCell scope='row'>{url.url_desc}</TableCell>
             <TableCell scope='row'><Button label={<Text size="small">Delete</Text>} onClick={() => deleteUrl(url.id)}></Button></TableCell>
-            <TableCell scope='row'><Button label={<Text size="small">Edit</Text>} onClick={(e) => getEditedRecord(e)}></Button></TableCell>
+            <TableCell scope='row'><Button label={<Text size="small">Edit</Text>} onClick={() => {setEditedRecord(url); setEditing(true)}}></Button></TableCell>
           </TableRow>
           </>
         ))}
