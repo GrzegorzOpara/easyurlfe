@@ -75,23 +75,47 @@ export const HomePage = () => {
       }
     }
 
-    let getEditedRecord = async(e) => {
-      setEditing(true)
-      setEditedRecord(e.target.value)
-      console.log(editedRecord)
-    }
-    
-    let editUrl = async(e) => {
+    // let getEditedRecord = async(e) => {
+    //   setEditing(true)
+    //   setEditedRecord(e.target.value)
+    //   console.log(editedRecord)
+    // }
+  
+    let updateUrl = async(e) => {
+      //e.preventDefault()
+/*       let response = await fetch('http://127.0.0.1:8000/api/urls/' + e.id + '/', {
+        method: 'PUT',
+        headers: {
+          'Content-Type':'application/json',
+          'Authorization':'Bearer ' + String(authTokens.access)
+        },
+        body:JSON.stringify({ 
+          'url_link':e.target.url_link.value,
+          'url_name':e.target.url_name.value,
+          'url_desc':e.target.url_desc.value})
+        })
 
-    }
-    
+        let resp = await response.json()
+        console.log(resp) */
+        console.log(e)
+  
+/*         if (response.status === 200) {
+          getUrls()
+          e.target.reset();
+          setEditing(false)
+        } else {
+          console.log('Error updating the entry!')
+        } */
+    } 
    
-    let editRecord = async(e) => {
-      const newRecord = {...editedRecord, url_link: e.target.value}
+    let editRecord = async(e, field) => {
+      const newRecord = {...editedRecord, [field]: e.target.value}
+      //console.log(newRecord['url_link'])
       setEditedRecord(newRecord)   
     }
 
     useEffect(() => {
+      console.log('Boom!')
       getUrls()
     }, [])  
 
@@ -103,11 +127,11 @@ export const HomePage = () => {
       </Box>
     </Box>
     <Box pad='small' direction="row-responsive">
-    <Form onSubmit={editing ? event=>editUrl(event) : event=>addUrl(event)}>
+    <Form onSubmit={editing ? event => updateUrl(event) : event=>addUrl(event)}>
       <Box direction='row'>
-        <FormField><TextInput name="url_link" value={editing ? editedRecord.url_link : '' } onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">url</Text>}></TextInput></FormField>
-        <FormField><TextInput name="url_name" value={editing ? editedRecord.url_name : '' } placeholder={<Text size="small">name</Text>}></TextInput></FormField>
-        <FormField><TextInput name="url_desc" value={editing ? editedRecord.url_desc : '' } placeholder={<Text size="small">description</Text>}></TextInput></FormField>
+        <FormField><TextInput name="url_link" value={editing ? editedRecord.url_link : '' } onChange={editing ? (e) => editRecord(e, 'url_link'): null } placeholder={<Text size="small">url</Text>}></TextInput></FormField>
+        <FormField><TextInput name="url_name" value={editing ? editedRecord.url_name : '' } onChange={editing ? (e) => editRecord(e, 'url_name'): null } placeholder={<Text size="small">name</Text>}></TextInput></FormField>
+        <FormField><TextInput name="url_desc" value={editing ? editedRecord.url_desc : '' } onChange={editing ? (e) => editRecord(e, 'url_desc'): null } placeholder={<Text size="small">description</Text>}></TextInput></FormField>
         <Box justify="center" pad="small" direction="row">
           <Button pad="small" label={<Text size="medium">{editing ? 'save': 'add'}</Text>} type="submit" primary={false} />
           {editing ? <Button pad="small" label={<Text size="medium">cancel</Text>} primary={false} /> : null}
@@ -124,7 +148,7 @@ export const HomePage = () => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {urls.map(url => (
+        {urls.map(url => ( console.log(url.id),
           <>
           <TableRow key={url.id}>
             <TableCell scope='row'><Anchor href={url.url_link} label={url.url_link} /></TableCell>
