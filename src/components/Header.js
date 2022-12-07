@@ -8,9 +8,9 @@ const Header = () => {
         <div>
             {user ? (
                 <>
-                <Box justify = "end" direction="row-responsive">
-                    <Box pad='small'>
-                        <Tag value={<Text size="medium">{username}</Text>}/>
+                <Box justify = "end" direction="row-responsive" border={{color:"brand", size: "medium", side: "bottom"}}>
+                    <Box pad='small' alignSelf='center'>
+                        <Text size="medium">{username}</Text>
                     </Box>
                     <Box pad='small'>
                         <Button label={<Text size="medium">Logout</Text>} onClick={logoutUser} primary={true} />
@@ -19,7 +19,7 @@ const Header = () => {
                 </>
             ) : (
                 <>
-                <Box pad='small' justify = "end" direction="row-responsive">
+                <Box pad='small' justify = "end" direction="row-responsive" border={{color:"brand", size: "medium", side: "bottom"}}>
                     <Form
                     onSubmit={(event)=>loginUser(event)} >
                         <Box direction="row">
