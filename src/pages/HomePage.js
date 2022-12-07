@@ -110,6 +110,7 @@ export const HomePage = () => {
     }
 
     useEffect(() => {
+      console.log('Boom!')
       getUrls()
       // eslint-disable-next-line
     }, [])  
