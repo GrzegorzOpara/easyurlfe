@@ -1,6 +1,6 @@
 import React, {useContext} from 'react'
 import { AuthContext } from '../context/AuthContext';
-import { Button, Form, FormField, TextInput, Tag, Text, Box } from "grommet";
+import { Button, Form, FormField, TextInput, Text, Box } from "grommet";
 
 const Header = () => {
     let {user, username, loginUser, logoutUser} = useContext(AuthContext)
