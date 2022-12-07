@@ -29,9 +29,6 @@ export const HomePage = () => {
   }
 
   let deleteUrl = async(id) => {
-    //e.preventDefault()
-    console.log('Exec delere url')
-
     let response = await fetch('http://127.0.0.1:8000/api/urls/' + id + '/', {
       method: 'DELETE',
       headers: {
@@ -50,8 +47,6 @@ export const HomePage = () => {
 
   let addUrl = async(e) => {
     e.preventDefault()
-    console.log('Exec addUrl!')
-
     
     let response = await fetch('http://127.0.0.1:8000/api/urls/', {
       method: 'POST',
@@ -76,7 +71,6 @@ export const HomePage = () => {
     }
     
     let saveEditedUrl = async(e) => {
-      console.log(e)
       let response = await fetch('http://127.0.0.1:8000/api/urls/' + editedRecord.id + '/', {
         method: 'PUT',
         headers: {
@@ -110,7 +104,6 @@ export const HomePage = () => {
     }
 
     useEffect(() => {
-      console.log('Boom!')
       getUrls()
       // eslint-disable-next-line
     }, [])  
