@@ -118,9 +118,9 @@ export const HomePage = () => {
     <Box pad='small' direction="row-responsive">
     <Form onSubmit={editing ? event=>saveEditedUrl(event) : event=>addUrl(event)}>
       <Box direction='row'>
-        <FormField><TextInput name="url_link" value={editing ? editedRecord.url_link : '' } onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">url</Text>}></TextInput></FormField>
-        <FormField><TextInput name="url_name" value={editing ? editedRecord.url_name : '' } onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">name</Text>}></TextInput></FormField>
-        <FormField><TextInput name="url_desc" value={editing ? editedRecord.url_desc : '' } onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">description</Text>}></TextInput></FormField>
+        <FormField><TextInput name="url_link" value={editedRecord.url_link} onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">url</Text>}></TextInput></FormField>
+        <FormField><TextInput name="url_name" value={editedRecord.url_name} onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">name</Text>}></TextInput></FormField>
+        <FormField><TextInput name="url_desc" value={editedRecord.url_desc} onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">description</Text>}></TextInput></FormField>
         <Box justify="center" pad="small" direction="row">
           <Box pad="small"><Button label={<Text size="medium">{editing ? 'save': 'add'}</Text>} type="submit" primary={false} /></Box>
           <Box pad="small">{editing ? <Button label={<Text size="medium">cancel</Text>} onClick={ (e) => cancelEdit(e) } primary={false} /> : null}</Box>
