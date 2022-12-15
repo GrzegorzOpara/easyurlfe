@@ -9,6 +9,15 @@ on:
   #  branches:
   #    - main
   workflow_dispatch:
+    logLevel:
+    description: 'Log level'
+    required: true
+    default: 'warning'
+    type: choice
+    options:
+      - info
+      - warning
+      - debug
 
 jobs:
   build_and_deploy:
