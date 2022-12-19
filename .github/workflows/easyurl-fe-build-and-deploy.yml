@@ -28,7 +28,6 @@ jobs:
     name: Build and Deploy Job
     
     env:
-    #  AZURE_STATIC_WEB_APPS_API_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
       APP_LOCATION: "/" # location of your client code
       API_LOCATION: "api" # location of your api source code - optional
       APP_ARTIFACT_LOCATION: "build" # location of client code build output
@@ -47,7 +46,7 @@ jobs:
           app_location: ${{ env.APP_LOCATION }}
           api_location: ${{ env.API_LOCATION }}
           app_artifact_location: ${{ env.APP_ARTIFACT_LOCATION }}
-          # skip_app_build: true
+          skip_app_build: false
         env: # Add environment variables here
           REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
 
