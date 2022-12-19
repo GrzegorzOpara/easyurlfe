@@ -5,7 +5,7 @@ import jwt_decode from "jwt-decode";
 export const AuthContext = createContext()
 export const AuthProvider = ({children}) => {
 
-    const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
+    const {REACT_APP_API_URL} = process.env;
     console.log('Api url:' + REACT_APP_API_URL)
 
 
