@@ -3,7 +3,6 @@ import { AuthContext } from '../context/AuthContext'
 import { Anchor, Form, FormField, Table, Text, Box, TableHeader, TableBody, TableCell, TextInput, TableRow, Button } from "grommet";
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
-
 export const HomePage = () => {
   let [urls, setUrls] = useState([])
   let [editedRecord, setEditedRecord] = useState([])
