@@ -2,6 +2,8 @@ import React, { useEffect, useState, useContext } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import { Anchor, Form, FormField, Table, Text, Box, TableHeader, TableBody, TableCell, TextInput, TableRow, Button } from "grommet";
 
+const { REACT_APP_API_URL } = process.env;
+
 export const HomePage = () => {
   let [urls, setUrls] = useState([])
   let [editedRecord, setEditedRecord] = useState([])
@@ -11,7 +13,7 @@ export const HomePage = () => {
   let getUrls = async(e) => {
     let query = e ? e : ''
 
-    let response = await fetch('http://127.0.0.1:8000/api/urls/?query=' + query, {
+    let response = await fetch(REACT_APP_API_URL + '/api/urls/?query=' + query, {
       metchod: 'GET',
       headers: {
         'Content-Type':'application/json',
@@ -29,7 +31,7 @@ export const HomePage = () => {
   }
 
   let deleteUrl = async(id) => {
-    let response = await fetch('http://127.0.0.1:8000/api/urls/' + id + '/', {
+    let response = await fetch(REACT_APP_API_URL + '/api/urls/' + id + '/', {
       method: 'DELETE',
       headers: {
         'Content-Type':'application/json',
@@ -48,7 +50,7 @@ export const HomePage = () => {
   let addUrl = async(e) => {
     e.preventDefault()
     
-    let response = await fetch('http://127.0.0.1:8000/api/urls/', {
+    let response = await fetch(REACT_APP_API_URL + '/api/urls/', {
       method: 'POST',
       headers: {
         'Content-Type':'application/json',
@@ -71,7 +73,7 @@ export const HomePage = () => {
     }
     
     let saveEditedUrl = async(e) => {
-      let response = await fetch('http://127.0.0.1:8000/api/urls/' + editedRecord.id + '/', {
+      let response = await fetch(REACT_APP_API_URL + '/api/urls/' + editedRecord.id + '/', {
         method: 'PUT',
         headers: {
           'Content-Type':'application/json',

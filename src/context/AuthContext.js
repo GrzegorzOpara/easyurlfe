@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
 export const AuthContext = createContext()
-
 export const AuthProvider = ({children}) => {
-    
+
+const { REACT_APP_API_URL } = process.env;
+
     let [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null)
     let [user, setUser] = useState(() => localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null)
     let [username, setUsername] = useState(() => localStorage.getItem('username') ? localStorage.getItem('username') : null)
@@ -20,7 +21,7 @@ export const AuthProvider = ({children}) => {
         setUsername(val)
         localStorage.setItem('username', val)
 
-        let response = await fetch('http://127.0.0.1:8000/api/token/', {
+        let response = await fetch(REACT_APP_API_URL + '/api/token/', {
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -48,7 +49,7 @@ export const AuthProvider = ({children}) => {
     }
     
     let updateToken = async () => {
-        let response = await fetch('http://127.0.0.1:8000/api/token/refresh/', {
+        let response = await fetch(REACT_APP_API_URL + '/api/token/refresh/', {
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
