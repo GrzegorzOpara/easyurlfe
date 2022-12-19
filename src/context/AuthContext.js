@@ -5,10 +5,7 @@ import jwt_decode from "jwt-decode";
 export const AuthContext = createContext()
 export const AuthProvider = ({children}) => {
 
-    const TEST = "TEST"
     const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
-    console.log('Api url:' + REACT_APP_API_URL + " " + TEST)
-
 
     let [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null)
     let [user, setUser] = useState(() => localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null)
