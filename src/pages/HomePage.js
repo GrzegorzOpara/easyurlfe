@@ -1,13 +1,32 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import { Anchor, Form, FormField, Table, Text, Box, TableHeader, TableBody, TableCell, TextInput, TableRow, Button } from "grommet";
+import { AddCircle, Save, Edit, Trash, Redo } from 'grommet-icons';
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 export const HomePage = () => {
   let [urls, setUrls] = useState([])
+  let [filteredUrls, setFilteredUrls] = useState([]);
   let [editedRecord, setEditedRecord] = useState([])
   let [editing, setEditing] = useState(false)
   let {authTokens, logoutUser} = useContext(AuthContext)
+
+  // filter records by search text
+  const filterUrls = (e) => {
+    
+    if (e === "") 
+      {
+        setFilteredUrls(urls)
+      }
+    else {
+      const filteredData = urls.filter(item => {
+        return Object.keys(item).some(key =>
+          item[key].toString().toLowerCase().includes(e)
+        );
+      });
+      setFilteredUrls(filteredData);
+    }
+  }
 
   let getUrls = async(e) => {
     let query = e ? e : ''
@@ -24,6 +43,7 @@ export const HomePage = () => {
 
     if (response.status === 200) {
       setUrls(data)
+      setFilteredUrls(data)
     } else if (response.statusText === 'Unauthorized') {
       logoutUser()
     }
@@ -113,7 +133,7 @@ export const HomePage = () => {
   <>
     <Box fill direction="row-responsive">
       <Box pad="small">
-        <TextInput plain placeholder="Search url" onChange={event => getUrls(event.target.value)}></TextInput>
+        <TextInput plain placeholder="Search url" onChange={event => filterUrls(event.target.value)}></TextInput>
       </Box>
     </Box>
     <Box pad='small' direction="row-responsive">
@@ -123,32 +143,41 @@ export const HomePage = () => {
         <FormField><TextInput name="url_name" value={editedRecord.url_name} onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">name</Text>}></TextInput></FormField>
         <FormField><TextInput name="url_desc" value={editedRecord.url_desc} onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">description</Text>}></TextInput></FormField>
         <Box justify="center" pad="small" direction="row">
-          <Box pad="small"><Button label={<Text size="medium">{editing ? 'save': 'add'}</Text>} type="submit" primary={false} /></Box>
-          <Box pad="small">{editing ? <Button label={<Text size="medium">cancel</Text>} onClick={ (e) => cancelEdit(e) } primary={false} /> : null}</Box>
+          <Box pad="small"><Button type="submit" primary={false}>{editing ? <Save size="medium"/> : <AddCircle size="medium"/>}</Button></Box>
+          <Box pad="small">{editing ? <Button onClick={ (e) => cancelEdit(e) }><Redo size="medium"/></Button> : null}</Box>
         </Box>
       </Box>    
     </Form>
     </Box>
+    {filteredUrls.length !== 0 ? (
     <Table>
       <TableHeader>
         <TableRow>
           <TableCell scope="col" border="bottom">Link</TableCell>
           <TableCell scope="col" border="bottom">Name</TableCell>
+          <TableCell scope="col" border="bottom"></TableCell>
+          <TableCell scope="col" border="bottom"></TableCell>
           <TableCell scope="col" border="bottom">Description</TableCell>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {urls.map(url => (
+        {filteredUrls.map(url => (
           <TableRow key={url.id}>
             <TableCell scope='row'><Anchor href={url.url_link} label={url.url_link} /></TableCell>
             <TableCell scope='row'>{url.url_name}</TableCell>
+            <TableCell scope='row'><Button onClick={() => deleteUrl(url.id)}><Trash size="medium"/></Button></TableCell>
+            <TableCell scope='row'><Button onClick={() => {setEditedRecord(url); setEditing(true)}}><Edit size="medium"/></Button></TableCell>
             <TableCell scope='row'>{url.url_desc}</TableCell>
-            <TableCell scope='row'><Button label={<Text size="small">delete</Text>} onClick={() => deleteUrl(url.id)}></Button></TableCell>
-            <TableCell scope='row'><Button label={<Text size="small">edit</Text>} onClick={() => {setEditedRecord(url); setEditing(true)}}></Button></TableCell>
           </TableRow>
         ))}
       </TableBody>
     </Table>
+    ) : 
+    ( 
+    <Box pad="small">No Urls found!</Box>
+    )
+    }
+    
   </>
   )
 }
