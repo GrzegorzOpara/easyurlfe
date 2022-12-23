@@ -5,10 +5,15 @@ import { AddCircle, Save, Edit, Trash, Redo } from 'grommet-icons';
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 export const HomePage = () => {
+  // urls
   let [urls, setUrls] = useState([])
   let [filteredUrls, setFilteredUrls] = useState([]);
+  
+  // editing record
   let [editedRecord, setEditedRecord] = useState([])
   let [editing, setEditing] = useState(false)
+  
+  // auth
   let {authTokens, logoutUser} = useContext(AuthContext)
 
   // filter records by search text
