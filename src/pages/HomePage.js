@@ -161,8 +161,8 @@ export const HomePage = () => {
         <TableRow>
           <TableCell scope="col" border="bottom">Link</TableCell>
           <TableCell scope="col" border="bottom">Name</TableCell>
-          <TableCell scope="col" border="bottom"></TableCell>
-          <TableCell scope="col" border="bottom"></TableCell>
+          <TableCell scope="col" border="bottom" width="15px"></TableCell>
+          <TableCell scope="col" border="bottom" width="15px"></TableCell>
           <TableCell scope="col" border="bottom">Description</TableCell>
         </TableRow>
       </TableHeader>
@@ -171,8 +171,8 @@ export const HomePage = () => {
           <TableRow key={url.id}>
             <TableCell scope='row'><Anchor href={url.url_link} label={url.url_link} /></TableCell>
             <TableCell scope='row'>{url.url_name}</TableCell>
-            <TableCell scope='row' width={"5px"}><Button onClick={() => deleteUrl(url.id)}><Tip content="Delete"><Trash size="medium"/></Tip></Button></TableCell>
-            <TableCell scope='row' width={"5px"}><Button onClick={() => {setEditedRecord(url); setEditing(true)}}><Tip content="Edit"><Edit size="medium"/></Tip></Button></TableCell>
+            <TableCell scope='row'><Button onClick={() => deleteUrl(url.id)}><Tip content="Delete"><Trash size="small"/></Tip></Button></TableCell>
+            <TableCell scope='row'><Button onClick={() => {setEditedRecord(url); setEditing(true)}}><Tip content="Edit"><Edit size="small"/></Tip></Button></TableCell>
             <TableCell scope='row'>{url.url_desc}</TableCell>
           </TableRow>
         ))}
