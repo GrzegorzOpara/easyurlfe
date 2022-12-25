@@ -143,13 +143,13 @@ export const HomePage = () => {
     </Box>
     <Box pad='small' direction="row-responsive">
     <Form onSubmit={editing ? event=>saveEditedUrl(event) : event=>addUrl(event)}>
-      <Box direction='row'>
+      <Box direction='row-responsive'>
         <FormField><TextInput name="url_link" value={editedRecord.url_link} onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">url</Text>}></TextInput></FormField>
         <FormField><TextInput name="url_name" value={editedRecord.url_name} onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">name</Text>}></TextInput></FormField>
         <FormField><TextInput name="url_desc" value={editedRecord.url_desc} onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">description</Text>}></TextInput></FormField>
         <Box justify="center" pad="small" direction="row">
-          <Box pad="small"><Button type="submit" primary={false}>{editing ? <Tip content="Save"><Save size="medium"/></Tip> : <Tip content="Add"><AddCircle size="medium"/></Tip>}</Button></Box>
-          <Box pad="small">{editing ? <Button onClick={ (e) => cancelEdit(e) }><Tip content="Cancel"><Redo size="medium"/></Tip></Button> : null}</Box>
+          <Box pad="small"><Button type="submit" primary={false}>{editing ? <Tip content="Save"><Save size="small"/></Tip> : <Tip content="Add"><AddCircle size="small"/></Tip>}</Button></Box>
+          <Box pad="small">{editing ? <Button onClick={ (e) => cancelEdit(e) }><Tip content="Cancel"><Redo size="small"/></Tip></Button> : null}</Box>
         </Box>
       </Box>    
     </Form>
