@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext, useCallback } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import { Anchor, Form, FormField, Table, Text, Box, TableHeader, TableBody, TableCell, TextInput, TableRow, Button, Tip } from "grommet";
 import { AddCircle, Save, Edit, Trash, Redo } from 'grommet-icons';
@@ -18,21 +18,21 @@ export const HomePage = () => {
   let {authTokens, logoutUser} = useContext(AuthContext)
 
   // filter records by search text
-  const filterUrls = (e) => {
+  const filterUrls = useCallback( (event) => {
     
-    if (e === "") 
+    if (event === "") 
       {
         setFilteredUrls(urls)
       }
     else {
       const filteredData = urls.filter(item => {
         return Object.keys(item).some(key =>
-          item[key].toString().toLowerCase().includes(e)
+          item[key].toString().toLowerCase().includes(event)
         );
       });
       setFilteredUrls(filteredData);
     }
-  }
+  }, [urls])
 
   let getUrls = async(e) => {
     let query = e ? e : ''
@@ -137,7 +137,7 @@ export const HomePage = () => {
 
   return (
   <>
-    <UrlSearchBar />
+    <UrlSearchBar onChange={filterUrls} />
     {/* <Box fill direction="row-responsive">
       <Box pad="small">
         <TextInput plain placeholder="Search url" onChange={event => filterUrls(event.target.value)}></TextInput>

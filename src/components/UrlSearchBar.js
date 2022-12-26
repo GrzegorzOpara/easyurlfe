@@ -1,8 +1,8 @@
 import { Box, TextInput } from "grommet"
 
 const UrlSearchBar = (props) => {  
-    const handleChange = (event) => {
-        props.onChange()
+    const filterUrls = (value) => {
+        props.onChange(value)
     }
     
     return (
