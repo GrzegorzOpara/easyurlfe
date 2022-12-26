@@ -1,7 +1,8 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext, useCallback } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import { Anchor, Form, FormField, Table, Text, Box, TableHeader, TableBody, TableCell, TextInput, TableRow, Button, Tip } from "grommet";
 import { AddCircle, Save, Edit, Trash, Redo } from 'grommet-icons';
+import UrlSearchBar from '../components/UrlSearchBar';
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 export const HomePage = () => {
@@ -17,21 +18,21 @@ export const HomePage = () => {
   let {authTokens, logoutUser} = useContext(AuthContext)
 
   // filter records by search text
-  const filterUrls = (e) => {
+  const filterUrls = useCallback( (event) => {
     
-    if (e === "") 
+    if (event === "") 
       {
         setFilteredUrls(urls)
       }
     else {
       const filteredData = urls.filter(item => {
         return Object.keys(item).some(key =>
-          item[key].toString().toLowerCase().includes(e)
+          item[key].toString().toLowerCase().includes(event)
         );
       });
       setFilteredUrls(filteredData);
     }
-  }
+  }, [urls])
 
   let getUrls = async(e) => {
     let query = e ? e : ''
@@ -94,53 +95,49 @@ export const HomePage = () => {
       } else {
         console.log('Error adding new entry!')
       }
-    }
+  }
     
-    let saveEditedUrl = async(e) => {
-      let response = await fetch(REACT_APP_API_URL + '/api/urls/' + editedRecord.id + '/', {
-        method: 'PUT',
-        headers: {
-          'Content-Type':'application/json',
-          'Authorization':'Bearer ' + String(authTokens.access)
-        },
-        body:JSON.stringify({ 
-          'url_link':editedRecord.url_link,
-          'url_name':editedRecord.url_name,
-          'url_desc':editedRecord.url_desc})
-        })
-      
-      await response.json()
-
-       if (response.status === 200) {
-         getUrls()
-         setEditing(false)
-         e.target.reset();
-       } else {
-         console.log('Error updating the entry!')
-       }
-    }
-   
-    let editRecord = async(e) => {
-      const newRecord = {...editedRecord, [e.target.name]: e.target.value}
-      setEditedRecord(newRecord)   
-    }
+  let saveEditedUrl = async(e) => {
+    let response = await fetch(REACT_APP_API_URL + '/api/urls/' + editedRecord.id + '/', {
+      method: 'PUT',
+      headers: {
+        'Content-Type':'application/json',
+        'Authorization':'Bearer ' + String(authTokens.access)
+      },
+      body:JSON.stringify({ 
+        'url_link':editedRecord.url_link,
+        'url_name':editedRecord.url_name,
+        'url_desc':editedRecord.url_desc})
+      })
     
-    let cancelEdit = async(e) => {
-      setEditing(false); 
-    }
+    await response.json()
 
-    useEffect(() => {
-      getUrls()
-      // eslint-disable-next-line
-    }, [])  
+      if (response.status === 200) {
+        getUrls()
+        setEditing(false)
+        e.target.reset();
+      } else {
+        console.log('Error updating the entry!')
+      }
+  }
+  
+  let editRecord = async(e) => {
+    const newRecord = {...editedRecord, [e.target.name]: e.target.value}
+    setEditedRecord(newRecord)   
+  }
+  
+  let cancelEdit = async(e) => {
+    setEditing(false); 
+  }
+
+  useEffect(() => {
+    getUrls()
+    // eslint-disable-next-line
+  }, [])  
 
   return (
-  <>
-    <Box fill direction="row-responsive">
-      <Box pad="small">
-        <TextInput plain placeholder="Search url" onChange={event => filterUrls(event.target.value)}></TextInput>
-      </Box>
-    </Box>
+  <div>
+    <UrlSearchBar onChange={filterUrls} />
     <Box pad='small' direction="row-responsive">
     <Form onSubmit={editing ? event=>saveEditedUrl(event) : event=>addUrl(event)}>
       <Box direction='row-responsive'>
@@ -185,6 +182,6 @@ export const HomePage = () => {
     )
     }
     
-  </>
+  </div>
   )
 }
