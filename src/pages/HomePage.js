@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import { Anchor, Form, FormField, Table, Text, Box, TableHeader, TableBody, TableCell, TextInput, TableRow, Button, Tip } from "grommet";
 import { AddCircle, Save, Edit, Trash, Redo } from 'grommet-icons';
+import UrlSearchBar from '../components/UrlSearchBar';
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 export const HomePage = () => {
@@ -136,11 +137,12 @@ export const HomePage = () => {
 
   return (
   <>
-    <Box fill direction="row-responsive">
+    <UrlSearchBar />
+    {/* <Box fill direction="row-responsive">
       <Box pad="small">
         <TextInput plain placeholder="Search url" onChange={event => filterUrls(event.target.value)}></TextInput>
       </Box>
-    </Box>
+    </Box> */}
     <Box pad='small' direction="row-responsive">
     <Form onSubmit={editing ? event=>saveEditedUrl(event) : event=>addUrl(event)}>
       <Box direction='row-responsive'>
