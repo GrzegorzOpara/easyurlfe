@@ -97,43 +97,43 @@ export const HomePage = () => {
       }
     }
     
-    let saveEditedUrl = async(e) => {
-      let response = await fetch(REACT_APP_API_URL + '/api/urls/' + editedRecord.id + '/', {
-        method: 'PUT',
-        headers: {
-          'Content-Type':'application/json',
-          'Authorization':'Bearer ' + String(authTokens.access)
-        },
-        body:JSON.stringify({ 
-          'url_link':editedRecord.url_link,
-          'url_name':editedRecord.url_name,
-          'url_desc':editedRecord.url_desc})
-        })
-      
-      await response.json()
-
-       if (response.status === 200) {
-         getUrls()
-         setEditing(false)
-         e.target.reset();
-       } else {
-         console.log('Error updating the entry!')
-       }
-    }
-   
-    let editRecord = async(e) => {
-      const newRecord = {...editedRecord, [e.target.name]: e.target.value}
-      setEditedRecord(newRecord)   
-    }
+  let saveEditedUrl = async(e) => {
+    let response = await fetch(REACT_APP_API_URL + '/api/urls/' + editedRecord.id + '/', {
+      method: 'PUT',
+      headers: {
+        'Content-Type':'application/json',
+        'Authorization':'Bearer ' + String(authTokens.access)
+      },
+      body:JSON.stringify({ 
+        'url_link':editedRecord.url_link,
+        'url_name':editedRecord.url_name,
+        'url_desc':editedRecord.url_desc})
+      })
     
-    let cancelEdit = async(e) => {
-      setEditing(false); 
-    }
+    await response.json()
 
-    useEffect(() => {
-      getUrls()
-      // eslint-disable-next-line
-    }, [])  
+      if (response.status === 200) {
+        getUrls()
+        setEditing(false)
+        e.target.reset();
+      } else {
+        console.log('Error updating the entry!')
+      }
+  }
+  
+  let editRecord = async(e) => {
+    const newRecord = {...editedRecord, [e.target.name]: e.target.value}
+    setEditedRecord(newRecord)   
+  }
+  
+  let cancelEdit = async(e) => {
+    setEditing(false); 
+  }
+
+  useEffect(() => {
+    getUrls()
+    // eslint-disable-next-line
+  }, [])  
 
   return (
   <>
