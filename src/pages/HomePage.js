@@ -95,7 +95,7 @@ export const HomePage = () => {
       } else {
         console.log('Error adding new entry!')
       }
-    }
+  }
     
   let saveEditedUrl = async(e) => {
     let response = await fetch(REACT_APP_API_URL + '/api/urls/' + editedRecord.id + '/', {
@@ -136,13 +136,8 @@ export const HomePage = () => {
   }, [])  
 
   return (
-  <>
+  <div>
     <UrlSearchBar onChange={filterUrls} />
-    {/* <Box fill direction="row-responsive">
-      <Box pad="small">
-        <TextInput plain placeholder="Search url" onChange={event => filterUrls(event.target.value)}></TextInput>
-      </Box>
-    </Box> */}
     <Box pad='small' direction="row-responsive">
     <Form onSubmit={editing ? event=>saveEditedUrl(event) : event=>addUrl(event)}>
       <Box direction='row-responsive'>
@@ -187,6 +182,6 @@ export const HomePage = () => {
     )
     }
     
-  </>
+  </div>
   )
 }
