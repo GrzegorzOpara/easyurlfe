@@ -7,7 +7,7 @@ const Header = () => {
     return (
         <div>
             {user ? (
-                <>
+                <div>
                 <Box justify = "end" direction="row-responsive" border={{color:"brand", size: "medium", side: "bottom"}}>
                     <Box pad='small' alignSelf='center'>
                         <Text size="medium">{username}</Text>
@@ -16,9 +16,9 @@ const Header = () => {
                         <Button label={<Text size="medium">Logout</Text>} onClick={logoutUser} primary={true} />
                     </Box>
                 </Box>
-                </>
+                </div>
             ) : (
-                <>
+                <div>
                 <Box pad='small' justify = "end" direction="row-responsive" border={{color:"brand", size: "medium", side: "bottom"}}>
                     <Form
                     onSubmit={(event)=>loginUser(event)} >
@@ -35,7 +35,7 @@ const Header = () => {
                         </Box>
                     </Form>
                     </Box>
-                </>
+                </div>
             )}
             
         </div>

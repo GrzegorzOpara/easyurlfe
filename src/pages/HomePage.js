@@ -138,9 +138,9 @@ export const HomePage = () => {
   return (
   <div>
     <UrlSearchBar onChange={filterUrls} />
-    <Box pad='small' direction="row-responsive">
+    <Box fill pad='small' direction="row-responsive">
     <Form onSubmit={editing ? event=>saveEditedUrl(event) : event=>addUrl(event)}>
-      <Box direction='row-responsive'>
+      <Box fill alignContent='stretch' direction='row-responsive'>
         <FormField><TextInput name="url_link" value={editedRecord.url_link} onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">url</Text>}></TextInput></FormField>
         <FormField><TextInput name="url_name" value={editedRecord.url_name} onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">name</Text>}></TextInput></FormField>
         <FormField><TextInput name="url_desc" value={editedRecord.url_desc} onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">description</Text>}></TextInput></FormField>
