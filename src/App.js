@@ -21,6 +21,11 @@ const theme = {
       size: '15px',
       height: '20px',
     },
+    tip: {
+      content: {
+        background: { opacity: false },
+      }
+    },
   },
 };
 

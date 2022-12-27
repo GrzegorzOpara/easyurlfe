@@ -119,6 +119,8 @@ export const HomePage = () => {
       } else {
         console.log('Error updating the entry!')
       }
+    
+    setEditing(false); 
   }
   
   let editRecord = async(e) => {
@@ -139,14 +141,14 @@ export const HomePage = () => {
   <div>
     <UrlSearchBar onChange={filterUrls} />
     <Box fill pad='small' direction="row-responsive">
-    <Form onSubmit={editing ? event=>saveEditedUrl(event) : event=>addUrl(event)}>
-      <Box fill alignContent='stretch' direction='row-responsive'>
-        <FormField><TextInput name="url_link" value={editedRecord.url_link} onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">url</Text>}></TextInput></FormField>
-        <FormField><TextInput name="url_name" value={editedRecord.url_name} onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">name</Text>}></TextInput></FormField>
-        <FormField><TextInput name="url_desc" value={editedRecord.url_desc} onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">description</Text>}></TextInput></FormField>
+    <Form style={{width: "100%"}} onSubmit={editing ? event=>saveEditedUrl(event) : event=>addUrl(event)}>
+      <Box width="1500px" fill direction='row-responsive'>
+        <Box width="15%"><FormField><TextInput name="url_link" value={editing ? editedRecord.url_link : ""} onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">url</Text>}></TextInput></FormField></Box>
+        <Box width="15%"><FormField><TextInput name="url_name" value={editing ? editedRecord.url_name : ""} onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">name</Text>}></TextInput></FormField></Box>
+        <Box width="70%"><FormField><TextInput name="url_desc" value={editing ? editedRecord.url_desc : ""} onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">description</Text>}></TextInput></FormField></Box>
         <Box justify="center" pad="small" direction="row">
-          <Box pad="small"><Button type="submit" primary={false}>{editing ? <Tip content="Save"><Save size="small"/></Tip> : <Tip content="Add"><AddCircle size="small"/></Tip>}</Button></Box>
-          <Box pad="small">{editing ? <Button onClick={ (e) => cancelEdit(e) }><Tip content="Cancel"><Redo size="small"/></Tip></Button> : null}</Box>
+          <Box pad="small"><Button type="submit" primary={false}>{editing ? <Tip content="Save"><Save size="medium"/></Tip> : <Tip content="Add"><AddCircle size="medium"/></Tip>}</Button></Box>
+          <Box pad="small">{editing ? <Button onClick={ (e) => cancelEdit(e) }><Tip content="Cancel"><Redo size="medium"/></Tip></Button> : null}</Box>
         </Box>
       </Box>    
     </Form>
@@ -156,11 +158,11 @@ export const HomePage = () => {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableCell scope="col" border="bottom">Link</TableCell>
-          <TableCell scope="col" border="bottom">Name</TableCell>
-          <TableCell scope="col" border="bottom" width="15px"></TableCell>
-          <TableCell scope="col" border="bottom" width="15px"></TableCell>
-          <TableCell scope="col" border="bottom">Description</TableCell>
+          <TableCell scope="col" size="medium" border="bottom">url</TableCell>
+          <TableCell scope="col" size="medium" border="bottom">name</TableCell>
+          <TableCell scope="col" size="xxsmall" border="bottom"><Box direction="row" justify="center">edit</Box></TableCell>
+          <TableCell scope="col" size="xxsmall" border="bottom"><Box direction="row" justify="center">delete</Box></TableCell>
+          <TableCell scope="col" size="xlarge" border="bottom">description</TableCell>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -168,8 +170,8 @@ export const HomePage = () => {
           <TableRow key={url.id}>
             <TableCell scope='row'><Anchor href={url.url_link} label={url.url_link} /></TableCell>
             <TableCell scope='row'>{url.url_name}</TableCell>
-            <TableCell scope='row'><Button onClick={() => deleteUrl(url.id)}><Tip content="Delete"><Trash size="small"/></Tip></Button></TableCell>
-            <TableCell scope='row'><Button onClick={() => {setEditedRecord(url); setEditing(true)}}><Tip content="Edit"><Edit size="small"/></Tip></Button></TableCell>
+            <TableCell scope='row'><Box direction="row" justify="center"><Button onClick={() => deleteUrl(url.id)}><Tip content="Delete"><Trash size="medium"/></Tip></Button></Box></TableCell>
+            <TableCell scope='row'><Box direction="row" justify="center"><Button onClick={() => {setEditedRecord(url); setEditing(true)}}><Tip content="Edit"><Edit size="medium"/></Tip></Button></Box></TableCell>
             <TableCell scope='row'>{url.url_desc}</TableCell>
           </TableRow>
         ))}
