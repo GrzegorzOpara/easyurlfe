@@ -126,10 +126,12 @@ export const HomePage = () => {
   let editRecord = async(e) => {
     const newRecord = {...editedRecord, [e.target.name]: e.target.value}
     setEditedRecord(newRecord)   
+    
   }
   
   let cancelEdit = async(e) => {
     setEditing(false); 
+    setEditedRecord([])
   }
 
   useEffect(() => {
