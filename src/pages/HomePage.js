@@ -143,9 +143,9 @@ export const HomePage = () => {
     <Box fill pad='small' direction="row-responsive">
     <Form style={{width: "100%"}} onSubmit={editing ? event=>saveEditedUrl(event) : event=>addUrl(event)}>
       <Box width="1500px" fill direction='row-responsive'>
-        <Box width="15%"><FormField><TextInput name="url_link" value={editing ? editedRecord.url_link : ""} onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">url</Text>}></TextInput></FormField></Box>
-        <Box width="15%"><FormField><TextInput name="url_name" value={editing ? editedRecord.url_name : ""} onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">name</Text>}></TextInput></FormField></Box>
-        <Box width="70%"><FormField><TextInput name="url_desc" value={editing ? editedRecord.url_desc : ""} onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">description</Text>}></TextInput></FormField></Box>
+        <Box width="15%"><FormField><TextInput name="url_link" value={editedRecord.url_link} onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">url</Text>}></TextInput></FormField></Box>
+        <Box width="15%"><FormField><TextInput name="url_name" value={editedRecord.url_name} onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">name</Text>}></TextInput></FormField></Box>
+        <Box width="70%"><FormField><TextInput name="url_desc" value={editedRecord.url_desc} onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">description</Text>}></TextInput></FormField></Box>
         <Box justify="center" pad="small" direction="row">
           <Box pad="small"><Button type="submit" primary={false}>{editing ? <Tip content="Save"><Save size="medium"/></Tip> : <Tip content="Add"><AddCircle size="medium"/></Tip>}</Button></Box>
           <Box pad="small">{editing ? <Button onClick={ (e) => cancelEdit(e) }><Tip content="Cancel"><Redo size="medium"/></Tip></Button> : null}</Box>
