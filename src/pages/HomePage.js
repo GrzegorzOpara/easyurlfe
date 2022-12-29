@@ -3,6 +3,7 @@ import { AuthContext } from '../context/AuthContext'
 import { Anchor, Form, FormField, Table, Text, Box, TableHeader, TableBody, TableCell, TextInput, TableRow, Button, Tip } from "grommet";
 import { AddCircle, Save, Edit, Trash, Redo } from 'grommet-icons';
 import UrlSearchBar from '../components/UrlSearchBar';
+import UrlTable from '../components/UrlTable';
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 export const HomePage = () => {
@@ -134,6 +135,13 @@ export const HomePage = () => {
     setEditedRecord([])
   }
 
+  let homePageData = {
+    filteredUrls:filteredUrls,
+    deleteUrl:deleteUrl, 
+    setEditedRecord:setEditedRecord,
+    setEditing:setEditing,
+  }
+
   useEffect(() => {
     getUrls()
     // eslint-disable-next-line
@@ -155,6 +163,7 @@ export const HomePage = () => {
       </Box>    
     </Form>
     </Box>
+    <UrlTable value={homePageData}/>
     {filteredUrls.length !== 0 ? (
     <Box>
     <Table>

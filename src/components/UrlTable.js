@@ -1,6 +1,19 @@
+import { Anchor, Table, Box, TableHeader, TableBody, TableCell, TableRow, Button, Tip } from "grommet";
+import { Edit, Trash } from 'grommet-icons';
 
 const UrlTable = () => {
-    
+
+    // const deleteUrl = (value) => {
+    //   deleteUrl()
+    // }
+
+    // const setEditing = (value) => {
+    //   setEditing
+    // }
+
+    // const setEditedRecord = (value) => {
+    //   props.onClick(value)
+    // }
 
     return (
         <div>
@@ -38,3 +51,5 @@ const UrlTable = () => {
         </div>
     )
 }
+
+export default UrlTable;
