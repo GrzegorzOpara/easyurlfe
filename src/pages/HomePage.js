@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useContext, useCallback } from 'react'
 import { AuthContext } from '../context/AuthContext'
-import { Anchor, Form, FormField, Table, Text, Box, TableHeader, TableBody, TableCell, TextInput, TableRow, Button, Tip } from "grommet";
-import { AddCircle, Save, Edit, Trash, Redo } from 'grommet-icons';
 import UrlSearchBar from '../components/UrlSearchBar';
 import UrlTable from '../components/UrlTable';
+import UrlAdd from '../components/UrlAdd';
+import UrlEdit from '../components/UrlEdit';
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 export const HomePage = () => {
@@ -121,7 +121,7 @@ export const HomePage = () => {
         console.log('Error updating the entry!')
       }
     
-    setEditing(false); 
+    cancelEdit(); 
   }
   
   let editRecord = async(e) => {
@@ -130,16 +130,9 @@ export const HomePage = () => {
     
   }
   
-  let cancelEdit = async(e) => {
+  let cancelEdit = async() => {
     setEditing(false); 
-    setEditedRecord([])
-  }
-
-  let homePageData = {
-    filteredUrls:filteredUrls,
-    deleteUrl:deleteUrl, 
-    setEditedRecord:setEditedRecord,
-    setEditing:setEditing,
+    setEditedRecord([])   
   }
 
   useEffect(() => {
@@ -149,52 +142,13 @@ export const HomePage = () => {
 
   return (
   <div>
-    <UrlSearchBar onChange={filterUrls} />
-    <Box fill pad='small' direction="row-responsive">
-    <Form style={{width: "100%"}} onSubmit={editing ? event=>saveEditedUrl(event) : event=>addUrl(event)}>
-      <Box width="1500px" fill direction='row-responsive'>
-        <Box width="15%"><FormField><TextInput name="url_link" value={editedRecord.url_link} onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">url</Text>}></TextInput></FormField></Box>
-        <Box width="15%"><FormField><TextInput name="url_name" value={editedRecord.url_name} onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">name</Text>}></TextInput></FormField></Box>
-        <Box width="70%"><FormField><TextInput name="url_desc" value={editedRecord.url_desc} onChange={editing ? (e) => editRecord(e): null } placeholder={<Text size="small">description</Text>}></TextInput></FormField></Box>
-        <Box justify="center" pad="small" direction="row">
-          <Box pad="small"><Button type="submit" primary={false}>{editing ? <Tip content="Save"><Save size="medium"/></Tip> : <Tip content="Add"><AddCircle size="medium"/></Tip>}</Button></Box>
-          <Box pad="small">{editing ? <Button onClick={ (e) => cancelEdit(e) }><Tip content="Cancel"><Redo size="medium"/></Tip></Button> : null}</Box>
-        </Box>
-      </Box>    
-    </Form>
-    </Box>
-    <UrlTable value={homePageData}/>
-    {filteredUrls.length !== 0 ? (
-    <Box>
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableCell scope="col" size="medium" border="bottom">url</TableCell>
-          <TableCell scope="col" size="medium" border="bottom">name</TableCell>
-          <TableCell scope="col" size="xxsmall" border="bottom"><Box direction="row" justify="center">edit</Box></TableCell>
-          <TableCell scope="col" size="xxsmall" border="bottom"><Box direction="row" justify="center">delete</Box></TableCell>
-          <TableCell scope="col" size="xlarge" border="bottom">description</TableCell>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {filteredUrls.map(url => (
-          <TableRow key={url.id}>
-            <TableCell scope='row'><Anchor href={url.url_link} label={url.url_link} /></TableCell>
-            <TableCell scope='row'>{url.url_name}</TableCell>
-            <TableCell scope='row'><Box direction="row" justify="center"><Button onClick={() => deleteUrl(url.id)}><Tip content="Delete"><Trash size="medium"/></Tip></Button></Box></TableCell>
-            <TableCell scope='row'><Box direction="row" justify="center"><Button onClick={() => {setEditedRecord(url); setEditing(true)}}><Tip content="Edit"><Edit size="medium"/></Tip></Button></Box></TableCell>
-            <TableCell scope='row'>{url.url_desc}</TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
-    </Box>
-    ) : 
-    ( 
-    <Box pad="small">No Urls found!</Box>
-    )
+    <UrlSearchBar onChange={filterUrls}/>
+    {editing ? 
+    <UrlEdit editRecord={editRecord} saveEditedUrl={saveEditedUrl} editedRecord={editedRecord} cancelEdit={cancelEdit}/>
+    :
+    <UrlAdd editRecord={editRecord} saveEditedUrl={saveEditedUrl} addUrl={addUrl} editedRecord={editedRecord} cancelEdit={cancelEdit}/>
     }
-    
+    <UrlTable filteredUrls={filteredUrls} setEditing={setEditing} setEditedRecord={setEditedRecord} deleteUrl={deleteUrl}/>   
   </div>
   )
 }

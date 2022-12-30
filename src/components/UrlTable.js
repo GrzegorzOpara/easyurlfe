@@ -1,20 +1,7 @@
 import { Anchor, Table, Box, TableHeader, TableBody, TableCell, TableRow, Button, Tip } from "grommet";
 import { Edit, Trash } from 'grommet-icons';
 
-const UrlTable = () => {
-
-    // const deleteUrl = (value) => {
-    //   deleteUrl()
-    // }
-
-    // const setEditing = (value) => {
-    //   setEditing
-    // }
-
-    // const setEditedRecord = (value) => {
-    //   props.onClick(value)
-    // }
-
+const UrlTable = ({filteredUrls, deleteUrl, setEditedRecord, setEditing}) => {
     return (
         <div>
         {filteredUrls.length !== 0 ? (
@@ -30,7 +17,7 @@ const UrlTable = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredUrls.map(url => (
+            {[...filteredUrls].sort((a, b) => b.id - a.id).map(url => (
               <TableRow key={url.id}>
                 <TableCell scope='row'><Anchor href={url.url_link} label={url.url_link} /></TableCell>
                 <TableCell scope='row'>{url.url_name}</TableCell>
