@@ -42,42 +42,56 @@ const CreateUserPage = () => {
     }
 
     const validateEmail = (e) => {
-        setValidEmail(validator.isEmail(e))
-        console.log(validator.isEmail(e))
+        if (validator.isEmail(e)) {
+            setValidEmail(true)
+            setEmail(e)
+        }
+        else
+            setValidEmail(false)
+    }
+
+    const handleSecondaryEmailChange = (e) => {
+        if (e.target.value === email)
+            setEmailMatch(true)
+        else
+            setEmailMatch(false)
     }
 
     return (
-        <Box>
+        <Box width='medium'>
             <Form onSubmit={(event) => handleSubmit(event)}>
-                <Box>
+                <Box pad="small">
                     <FormField>
-                        <TextInput name="username" ></TextInput>
+                        <Text size="xsmall">login</Text><TextInput name="username" ></TextInput>
                     </FormField>
                 </Box>
-                <Box>
+                <Box pad="small">
                     <FormField>
-                        <TextInput name="passwordPrimary" onChange={(e) => handlePrimaryPasswordChange(e)}></TextInput>
+                        <Text size="xsmall">password</Text><TextInput type="password" name="passwordPrimary" onChange={(e) => handlePrimaryPasswordChange(e)}></TextInput>
                         {validPassword? null : <Box>Passwords doesn't meet complexity requirements</Box>}
                     </FormField>
                 </Box>
-                <Box>
+                <Box pad="small">
                     <FormField>
-                        <TextInput name="passwordSecondary"  onChange={(e) => handleSecondaryPasswordChange(e)}></TextInput>
+                        <Text size="xsmall">repeat password</Text><TextInput type="password" name="passwordSecondary" onChange={(e) => handleSecondaryPasswordChange(e)}></TextInput>
                         {passwordsMatch? null : <Box>Passwords doesn't match</Box>}
                     </FormField>
                 </Box>
-                <Box>
+                <Box pad="small">
                     <FormField>
-                        <TextInput name="emailPrimary" placeholder="email address" onBlur={(e) => validateEmail(e.target.value)} ></TextInput>
+                        <Text size="xsmall">email</Text><TextInput name="emailPrimary" onBlur={(e) => validateEmail(e.target.value)} ></TextInput>
                         {validEmail? null : <Box>The email address is not valid</Box>}
                     </FormField>
                 </Box>
-                <Box>
+                <Box pad="small">
                     <FormField>
-                        <TextInput name="emailSecondary"></TextInput>
+                        <Text size="xsmall">repeat email</Text><TextInput name="emailSecondary" onChange={(e) => handleSecondaryEmailChange(e)}></TextInput>
+                        {emailMatch? null : <Box>Email doesn't match</Box>}
                     </FormField>
                 </Box>
-                <Box pad="small"><Button type="submit" primary={true}>Create User</Button></Box>
+                <Box pad="small">
+                    <Button type="submit" label={<Text size="medium">Create User</Text>} primary={true}></Button>
+                </Box>
             </Form>
         </Box>
     )
