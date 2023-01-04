@@ -81,13 +81,13 @@ const CreateUserPage = () => {
                 </Box>
                 <Box pad="small">
                     <FormField>
-                        <Text size="xsmall">password</Text><TextInput size="xsmall" size="xsmall" type="password" name="passwordPrimary" onChange={(e) => handlePrimaryPasswordChange(e)}></TextInput>
+                        <Text size="xsmall">password</Text><TextInput size="xsmall" type="password" name="passwordPrimary" onChange={(e) => handlePrimaryPasswordChange(e)}></TextInput>
                         {validPassword? null : <Box>Passwords doesn't meet complexity requirements</Box>}
                     </FormField>
                 </Box>
                 <Box pad="small">
                     <FormField>
-                        <Text size="xsmall">repeat password</Text><TextInput type="password" name="passwordSecondary" onChange={(e) => handleSecondaryPasswordChange(e)}></TextInput>
+                        <Text size="xsmall">repeat password</Text><TextInput size="xsmall" type="password" name="passwordSecondary" onChange={(e) => handleSecondaryPasswordChange(e)}></TextInput>
                         {passwordsMatch? null : <Box>Passwords doesn't match</Box>}
                     </FormField>
                 </Box>
