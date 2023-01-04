@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form, FormField, Text, Box, TextInput, Button, Tip } from "grommet";
 import validator from 'validator';
 
@@ -12,7 +12,21 @@ const CreateUserPage = () => {
     const [validPassword, setValidPassword] = useState(true)
     const [passwordsMatch, setPasswordsMatch] = useState(true)
     
-    
+    const [validForm, setValidForm] = useState(false)
+
+    useEffect(() => {
+        console.log(validEmail, validPassword, emailMatch, passwordsMatch, validForm)
+        if (validEmail && validPassword && emailMatch && passwordsMatch)
+            {
+                setValidForm(true)
+                console.log("changed to true")
+            }
+        else
+            {
+                setValidForm(false)
+                console.log("changed to false")
+            }
+    }, [validEmail, validPassword, emailMatch, passwordsMatch])
     
     const handleSubmit = (e) => {
         // Handle submit form function
@@ -62,12 +76,12 @@ const CreateUserPage = () => {
             <Form onSubmit={(event) => handleSubmit(event)}>
                 <Box pad="small">
                     <FormField>
-                        <Text size="xsmall">login</Text><TextInput name="username" ></TextInput>
+                        <Text size="xsmall">login</Text><TextInput size="xsmall" name="username" ></TextInput>
                     </FormField>
                 </Box>
                 <Box pad="small">
                     <FormField>
-                        <Text size="xsmall">password</Text><TextInput type="password" name="passwordPrimary" onChange={(e) => handlePrimaryPasswordChange(e)}></TextInput>
+                        <Text size="xsmall">password</Text><TextInput size="xsmall" size="xsmall" type="password" name="passwordPrimary" onChange={(e) => handlePrimaryPasswordChange(e)}></TextInput>
                         {validPassword? null : <Box>Passwords doesn't meet complexity requirements</Box>}
                     </FormField>
                 </Box>
@@ -79,18 +93,18 @@ const CreateUserPage = () => {
                 </Box>
                 <Box pad="small">
                     <FormField>
-                        <Text size="xsmall">email</Text><TextInput name="emailPrimary" onBlur={(e) => validateEmail(e.target.value)} ></TextInput>
+                        <Text size="xsmall">email</Text><TextInput size="xsmall" name="emailPrimary" onBlur={(e) => validateEmail(e.target.value)} ></TextInput>
                         {validEmail? null : <Box>The email address is not valid</Box>}
                     </FormField>
                 </Box>
                 <Box pad="small">
                     <FormField>
-                        <Text size="xsmall">repeat email</Text><TextInput name="emailSecondary" onChange={(e) => handleSecondaryEmailChange(e)}></TextInput>
+                        <Text size="xsmall">repeat email</Text><TextInput size="xsmall" name="emailSecondary" onChange={(e) => handleSecondaryEmailChange(e)}></TextInput>
                         {emailMatch? null : <Box>Email doesn't match</Box>}
                     </FormField>
                 </Box>
                 <Box pad="small">
-                    <Button type="submit" label={<Text size="medium">Create User</Text>} primary={true}></Button>
+                    <Button type="submit" label={<Text size="medium">Create User</Text>} primary={true} disabled={validForm? false : true}></Button>
                 </Box>
             </Form>
         </Box>
