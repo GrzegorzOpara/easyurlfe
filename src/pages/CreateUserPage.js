@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { Form, FormField, Text, Box, TextInput, Button, Tip } from "grommet";
 import validator from 'validator';
 
+const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
+
 const CreateUserPage = () => {
 
     const [email, setEmail] = useState(null)
     const [validEmail, setValidEmail] = useState(true)
     const [emailMatch, setEmailMatch] = useState(true)
+    const [validUsernameLen, setValidUsernameLen] = useState(false)
     
     const [password, setPassword] = useState(null)
     const [validPassword, setValidPassword] = useState(true)
@@ -16,24 +19,21 @@ const CreateUserPage = () => {
 
     useEffect(() => {
         console.log(validEmail, validPassword, emailMatch, passwordsMatch, validForm)
-        if (validEmail && validPassword && emailMatch && passwordsMatch)
+        if (validEmail && validPassword && emailMatch && passwordsMatch && validUsernameLen)
             {
                 setValidForm(true)
                 console.log("changed to true")
             }
         else
             {
-                setValidForm(false)
+                setValidForm(true) // should be false - testing
                 console.log("changed to false")
             }
     }, [validEmail, validPassword, emailMatch, passwordsMatch])
     
     const handleSubmit = (e) => {
+        console.log(e.target.username.value)
         // Handle submit form function
-    }
-
-    const validateUser = (e) => {
-        // validate if username is correct (lenght, dubplicate, etc.)
     }
 
     const validatePassword = (e) => {
@@ -64,6 +64,14 @@ const CreateUserPage = () => {
             setValidEmail(false)
     }
 
+    
+    const handleUsernameChange = (e) => {
+        if (e.target.value.length > 3 && validator.isAlphanumeric(e.target.value))
+            setValidUsernameLen(true)
+        else
+            setValidUsernameLen(false)
+    }
+
     const handleSecondaryEmailChange = (e) => {
         if (e.target.value === email)
             setEmailMatch(true)
@@ -76,7 +84,8 @@ const CreateUserPage = () => {
             <Form onSubmit={(event) => handleSubmit(event)}>
                 <Box pad="small">
                     <FormField>
-                        <Text size="xsmall">login</Text><TextInput size="xsmall" name="username" ></TextInput>
+                        <Text size="xsmall">login</Text><TextInput size="xsmall" name="username" onChange={(e) => handleUsernameChange(e)} ></TextInput>
+                        {validUsernameLen? null : <Box>Username min. 4 characters, alphanumeric!</Box>}
                     </FormField>
                 </Box>
                 <Box pad="small">
