@@ -1,9 +1,16 @@
 import React, {useContext} from 'react'
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../context/AuthContext';
 import { Button, Form, FormField, TextInput, Text, Box } from "grommet";
 
 const Header = () => {
     let {user, username, loginUser, logoutUser} = useContext(AuthContext)
+    const navigate = useNavigate()
+
+    const handleRegister = () => {
+        navigate('/create')
+    }
+
     return (
         <div>
             {user ? (
@@ -31,6 +38,9 @@ const Header = () => {
                             </FormField>
                             <Box justify="center" pad="small">
                                 <Button label={<Text size="medium">Login</Text>} type="submit" primary={true} />
+                            </Box>
+                            <Box justify="center" pad="small">
+                                <Button onClick={handleRegister} label={<Text size="medium">Register</Text>} type="button" primary={true} />
                             </Box>
                         </Box>
                     </Form>
