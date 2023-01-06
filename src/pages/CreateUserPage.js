@@ -1,43 +1,81 @@
-import { useEffect, useState } from "react";
-import { Form, FormField, Text, Box, TextInput, Button, Tip } from "grommet";
+import { useEffect, useState, useContext } from "react";
+import { AuthContext } from '../context/AuthContext';
+import { useNavigate } from "react-router-dom";
+import { Form, FormField, Text, Box, TextInput, Button } from "grommet";
 import validator from 'validator';
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 
 const CreateUserPage = () => {
-
+    // state
     const [email, setEmail] = useState(null)
-    const [validEmail, setValidEmail] = useState(true)
-    const [emailMatch, setEmailMatch] = useState(true)
+    const [validEmail, setValidEmail] = useState(false)
+    const [emailMatch, setEmailMatch] = useState(false)
     const [validUsernameLen, setValidUsernameLen] = useState(false)
     
     const [password, setPassword] = useState(null)
-    const [validPassword, setValidPassword] = useState(true)
-    const [passwordsMatch, setPasswordsMatch] = useState(true)
+    const [validPassword, setValidPassword] = useState(false)
+    const [passwordsMatch, setPasswordsMatch] = useState(false)
+    const [userAlreadyExists, setUserAlreadyExists] = useState(false)
     
     const [validForm, setValidForm] = useState(false)
 
+    // auth
+    let {user, username, loginUser, logoutUser} = useContext(AuthContext)
+    const navigate = useNavigate()
+
     useEffect(() => {
-        console.log(validEmail, validPassword, emailMatch, passwordsMatch, validForm)
         if (validEmail && validPassword && emailMatch && passwordsMatch && validUsernameLen)
             {
                 setValidForm(true)
-                console.log("changed to true")
+                // console.log("changed to true")
             }
         else
             {
-                setValidForm(true) // should be false - testing
-                console.log("changed to false")
+                setValidForm(false) // should be false - testing
+                // console.log("changed to false")
             }
-    }, [validEmail, validPassword, emailMatch, passwordsMatch])
-    
-    const handleSubmit = (e) => {
-        console.log(e.target.username.value)
-        // Handle submit form function
-    }
+    }, [validEmail, validPassword, emailMatch, passwordsMatch, validUsernameLen, validForm])
 
+    const addUser = async(e) => {
+        e.preventDefault()
+        
+        let response = await fetch(REACT_APP_API_URL + '/api/users/', {
+          method: 'POST',
+          headers: {
+            'Content-Type':'application/json'
+          },
+          body:JSON.stringify({ 
+            'username':e.target.username.value,
+            'email':e.target.emailPrimary.value,
+            'password':e.target.password.value})
+          })
+     
+          if (response.status === 201) {
+            loginUser(e)
+          }
+          else {
+            console.log('Error adding new user!')
+            setUserAlreadyExists(true)
+          }
+        }
+        
     const validatePassword = (e) => {
-        if (validator.isStrongPassword(e) === true)
+        const passwordComplexity = { 
+            minLength: 12, 
+            minLowercase: 1, 
+            minUppercase: 1, 
+            minNumbers: 1, 
+            minSymbols: 0, 
+            returnScore: false, 
+            pointsPerUnique: 1, 
+            pointsPerRepeat: 0.5, 
+            pointsForContainingLower: 10, 
+            pointsForContainingUpper: 10, 
+            pointsForContainingNumber: 10, 
+            pointsForContainingSymbol: 10 
+        }
+        if (validator.isStrongPassword(e, passwordComplexity) === true)
             setValidPassword(true)
         else
         setValidPassword(false)
@@ -66,8 +104,10 @@ const CreateUserPage = () => {
 
     
     const handleUsernameChange = (e) => {
-        if (e.target.value.length > 3 && validator.isAlphanumeric(e.target.value))
+        if (e.target.value.length > 3 && validator.isAlphanumeric(e.target.value)) {
             setValidUsernameLen(true)
+            setUserAlreadyExists(false)
+            }
         else
             setValidUsernameLen(false)
     }
@@ -80,42 +120,45 @@ const CreateUserPage = () => {
     }
 
     return (
-        <Box width='medium'>
-            <Form onSubmit={(event) => handleSubmit(event)}>
-                <Box pad="small">
-                    <FormField>
-                        <Text size="xsmall">login</Text><TextInput size="xsmall" name="username" onChange={(e) => handleUsernameChange(e)} ></TextInput>
-                        {validUsernameLen? null : <Box>Username min. 4 characters, alphanumeric!</Box>}
-                    </FormField>
-                </Box>
-                <Box pad="small">
-                    <FormField>
-                        <Text size="xsmall">password</Text><TextInput size="xsmall" type="password" name="passwordPrimary" onChange={(e) => handlePrimaryPasswordChange(e)}></TextInput>
-                        {validPassword? null : <Box>Passwords doesn't meet complexity requirements</Box>}
-                    </FormField>
-                </Box>
-                <Box pad="small">
-                    <FormField>
-                        <Text size="xsmall">repeat password</Text><TextInput size="xsmall" type="password" name="passwordSecondary" onChange={(e) => handleSecondaryPasswordChange(e)}></TextInput>
-                        {passwordsMatch? null : <Box>Passwords doesn't match</Box>}
-                    </FormField>
-                </Box>
-                <Box pad="small">
-                    <FormField>
-                        <Text size="xsmall">email</Text><TextInput size="xsmall" name="emailPrimary" onBlur={(e) => validateEmail(e.target.value)} ></TextInput>
-                        {validEmail? null : <Box>The email address is not valid</Box>}
-                    </FormField>
-                </Box>
-                <Box pad="small">
-                    <FormField>
-                        <Text size="xsmall">repeat email</Text><TextInput size="xsmall" name="emailSecondary" onChange={(e) => handleSecondaryEmailChange(e)}></TextInput>
-                        {emailMatch? null : <Box>Email doesn't match</Box>}
-                    </FormField>
-                </Box>
-                <Box pad="small">
-                    <Button type="submit" label={<Text size="medium">Create User</Text>} primary={true} disabled={validForm? false : true}></Button>
-                </Box>
-            </Form>
+        <Box fill justify="center" direction="row-responsive">
+            <Box width='medium'>
+                <Form onSubmit={(event) => addUser(event)}>
+                    <Box pad="small">
+                        <FormField>
+                            <Text size="xsmall">login</Text><TextInput size="xsmall" name="username" onChange={(e) => handleUsernameChange(e)} ></TextInput>
+                            {validUsernameLen? null : <Box>Username min. 4 characters, alphanumeric!</Box>}
+                        </FormField>
+                    </Box>
+                    <Box pad="small">
+                        <FormField>
+                            <Text size="xsmall">password</Text><TextInput size="xsmall" type="password" name="password" onChange={(e) => handlePrimaryPasswordChange(e)}></TextInput>
+                            {validPassword? null : <Box>Passwords doesn't meet complexity requirements</Box>}
+                        </FormField>
+                    </Box>
+                    <Box pad="small">
+                        <FormField>
+                            <Text size="xsmall">repeat password</Text><TextInput size="xsmall" type="password" name="passwordSecondary" onChange={(e) => handleSecondaryPasswordChange(e)}></TextInput>
+                            {passwordsMatch? null : <Box>Passwords doesn't match</Box>}
+                        </FormField>
+                    </Box>
+                    <Box pad="small">
+                        <FormField>
+                            <Text size="xsmall">email</Text><TextInput size="xsmall" name="emailPrimary" onBlur={(e) => validateEmail(e.target.value)} ></TextInput>
+                            {validEmail? null : <Box>The email address is not valid</Box>}
+                        </FormField>
+                    </Box>
+                    <Box pad="small">
+                        <FormField>
+                            <Text size="xsmall">repeat email</Text><TextInput size="xsmall" name="emailSecondary" onChange={(e) => handleSecondaryEmailChange(e)}></TextInput>
+                            {emailMatch? null : <Box>Email doesn't match</Box>}
+                        </FormField>
+                    </Box>
+                    <Box pad="small">
+                        <Button type="submit" label={<Text size="medium">Create User</Text>} primary={true} disabled={validForm? false : true}></Button>
+                        {userAlreadyExists? <Box>This usernane is already taken!</Box> : null}
+                    </Box>
+                </Form>
+            </Box>
         </Box>
     )
 }

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext, useCallback } from 'react'
+import { Box } from "grommet";
 import { AuthContext } from '../context/AuthContext'
 import UrlSearchBar from '../components/UrlSearchBar';
 import UrlTable from '../components/UrlTable';
@@ -141,7 +142,7 @@ export const HomePage = () => {
   }, [])  
 
   return (
-  <div>
+  <Box>
     <UrlSearchBar onChange={filterUrls}/>
     {editing ? 
     <UrlEdit editRecord={editRecord} saveEditedUrl={saveEditedUrl} editedRecord={editedRecord} cancelEdit={cancelEdit}/>
@@ -149,6 +150,6 @@ export const HomePage = () => {
     <UrlAdd editRecord={editRecord} saveEditedUrl={saveEditedUrl} addUrl={addUrl} editedRecord={editedRecord} cancelEdit={cancelEdit}/>
     }
     <UrlTable filteredUrls={filteredUrls} setEditing={setEditing} setEditedRecord={setEditedRecord} deleteUrl={deleteUrl}/>   
-  </div>
+  </Box>
   )
 }
