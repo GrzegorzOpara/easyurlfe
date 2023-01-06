@@ -1,6 +1,5 @@
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from '../context/AuthContext';
-import { useNavigate } from "react-router-dom";
 import { Form, FormField, Text, Box, TextInput, Button } from "grommet";
 import validator from 'validator';
 
@@ -21,8 +20,7 @@ const CreateUserPage = () => {
     const [validForm, setValidForm] = useState(false)
 
     // auth
-    let {user, username, loginUser, logoutUser} = useContext(AuthContext)
-    const navigate = useNavigate()
+    let {loginUser} = useContext(AuthContext)
 
     useEffect(() => {
         if (validEmail && validPassword && emailMatch && passwordsMatch && validUsernameLen)
