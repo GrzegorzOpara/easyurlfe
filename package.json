@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "fuse.js": "^6.6.2",
     "grommet": "^2.28.0",
     "grommet-icons": "^4.8.0",
     "jwt-decode": "^3.1.2",

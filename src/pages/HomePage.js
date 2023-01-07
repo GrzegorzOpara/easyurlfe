@@ -5,6 +5,7 @@ import UrlSearchBar from '../components/UrlSearchBar';
 import UrlTable from '../components/UrlTable';
 import UrlAdd from '../components/UrlAdd';
 import UrlEdit from '../components/UrlEdit';
+import Fuse from 'fuse.js';
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 export const HomePage = () => {
@@ -21,19 +22,29 @@ export const HomePage = () => {
 
   // filter records by search text
   const filterUrls = useCallback( (event) => {
-    
     if (event === "") 
       {
         setFilteredUrls(urls)
       }
     else {
-      const filteredData = urls.filter(item => {
-        return Object.keys(item).some(key =>
-          item[key].toString().toLowerCase().includes(event)
-        );
-      });
+      const options = {
+        includeScore: false,
+        findAllMatches: false,
+        // threshold: 0,
+        keys: ['url_link', 'url_name', 'url_desc']
+      }
+      
+      console.log(urls)
+      console.log(event)
+      const fuse = new Fuse(urls, options)
+      const filteredData = fuse.search(event)
+      console.log(filteredData)
+      
+      console.log(Object.values(filteredData))
+
       setFilteredUrls(filteredData);
-    }
+    };  
+    
   }, [urls])
 
   let getUrls = async(e) => {
