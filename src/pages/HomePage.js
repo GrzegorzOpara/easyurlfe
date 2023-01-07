@@ -27,20 +27,18 @@ export const HomePage = () => {
         setFilteredUrls(urls)
       }
     else {
+      let filteredData = []
+
       const options = {
-        includeScore: false,
-        findAllMatches: false,
-        // threshold: 0,
+        includeScore: true,
+        findAllMatches: true,
         keys: ['url_link', 'url_name', 'url_desc']
       }
       
-      console.log(urls)
-      console.log(event)
       const fuse = new Fuse(urls, options)
-      const filteredData = fuse.search(event)
-      console.log(filteredData)
+      const fuseResults = fuse.search(event)
       
-      console.log(Object.values(filteredData))
+      fuseResults.forEach(a => filteredData.push(a.item))
 
       setFilteredUrls(filteredData);
     };  
