@@ -4,36 +4,12 @@ import { Header } from './components/Header'
 import { PrivateRoutes } from './utils/PrivateRoutes'
 import { AuthProvider } from './context/AuthContext'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { Grommet } from 'grommet';
 import CreateUserPage from './pages/CreateUserPage';
 import WelcomePage from './pages/WelcomePage';
 
-const theme = {
-  global: {
-    input: {
-      font: {
-        size: '20px',
-        weight: 100
-      }
-    },
-    font: {
-      family: 'Roboto',
-      weight: 100,
-      size: '15px',
-      height: '20px',
-    },
-    tip: {
-      content: {
-        background: { opacity: false },
-      }
-    },
-  },
-};
-
 function App() {
   return (
-    
-    <Grommet theme = {theme}>
+    <div class="container">
       <Router>
         <AuthProvider>
           <Header/>
@@ -45,9 +21,8 @@ function App() {
             <Route path="/create" element={<CreateUserPage />}/>
           </Routes>
         </AuthProvider>
-      </Router>
-    </Grommet>
-    
+      </Router>   
+    </div>
   );
 }
 
