@@ -9,7 +9,7 @@ import WelcomePage from './pages/WelcomePage';
 
 function App() {
   return (
-    <div class="container">
+    <div className='container'>
       <Router>
         <AuthProvider>
           <Header/>
