@@ -135,8 +135,8 @@ const CreateUserPage = () => {
                         <div className="d-flex flex-row align-items-center mb-4">
                             <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
                             <div className="form-outline flex-fill mb-0">
-                            <input type="email" id="email" className="form-control" />
-                            <label className="form-label" for="email">Your Email</label>
+                                <label className="form-label" for="email">Your Email</label>
+                                <input type="email" id="email" className="form-control" />
                             </div>
                         </div>
 
