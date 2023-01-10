@@ -5,9 +5,9 @@ const UrlTable = ({filteredUrls, deleteUrl, setEditedRecord, setEditing}) => {
           <table className="table">
             <thead>
               <tr>
-                <th scope="col-2">url</th>
-                <th scope="col-2">name</th>
-                <th scope="col-1">delete / edit</th>
+                <th scope="col">url</th>
+                <th scope="col">name</th>
+                <th scope="col">delete|edit</th>
                 <th scope="col">description</th>
               </tr>
             </thead>
@@ -16,7 +16,12 @@ const UrlTable = ({filteredUrls, deleteUrl, setEditedRecord, setEditing}) => {
               <tr key={url.id}>
                 <th scope='col'><a href={url.url_link}>{url.url_link}</a></th>
                 <th scope='col'>{url.url_name}</th>
-                <th scope='col'><button className="btn btn-outline-danger mx-1" type="submit" onClick={() => deleteUrl(url.id)}>delete</button><button className="btn btn-outline-warning mx-1" type="submit" onClick={() => {setEditedRecord(url); setEditing(true)}}>edit</button></th>
+                <th scope='col'>
+                  <div className="d-flex">
+                    <button className="btn btn-outline-danger mx-1" type="submit" onClick={() => deleteUrl(url.id)}>delete</button>
+                    <button className="btn btn-outline-warning mx-1" type="submit" onClick={() => {setEditedRecord(url); setEditing(true)}}>edit</button>
+                  </div>
+                </th>
                 <th scope='col'>{url.url_desc}</th>
               </tr>
             ))}

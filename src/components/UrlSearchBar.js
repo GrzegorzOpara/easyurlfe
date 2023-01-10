@@ -1,5 +1,3 @@
-import { Box, TextInput } from "grommet"
-
 const UrlSearchBar = (props) => {  
     const filterUrls = (value) => {
         props.onChange(value)

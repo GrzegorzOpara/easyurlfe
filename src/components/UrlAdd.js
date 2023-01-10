@@ -1,6 +1,6 @@
 const UrlAdd = ({addUrl}) => {
     return (
-          <form className='d-flex flex-row' onSubmit={ event => addUrl(event)}>
+          <form className='d-flex flex-row my-2' onSubmit={ event => addUrl(event)}>
             <div className="col-2 m-1">
               <input className="form-control" id="url_link" placeholder="url" type="text" aria-label="url" />
             </div>

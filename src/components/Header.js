@@ -11,7 +11,7 @@ const Header = () => {
     }
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar navbar-expand-lg navbar-light bg-light my-2">
                 <div className='container col-1'>
                     <div className='align-self-center'>
                         <span className="navbar-brand h1">EasyUrl</span>
@@ -29,8 +29,8 @@ const Header = () => {
                     <form className="d-flex" onSubmit={(event)=>loginUser(event)}>
                         <input className="form-control mx-1" id="username" placeholder="login" type="text" aria-label="username" />
                         <input className="form-control mx-1" id="password" placeholder="password" type="password" aria-label="password" />
-                        <button className="btn btn-outline-success mx-1" type="submit">Login</button>
-                        <button className="btn btn-outline-success mx-1" type="button" onClick={handleRegister}>Register</button>
+                        <button className="btn btn-outline-primary mx-1" type="submit">Login</button>
+                        <button className="btn btn-outline-primary mx-1" type="button" onClick={handleRegister}>Register</button>
                     </form>
                 </div>
             )}
