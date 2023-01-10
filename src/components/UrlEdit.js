@@ -3,19 +3,23 @@ import { Save, Redo } from 'grommet-icons';
 
 const UrlEdit = ({saveEditedUrl, editedRecord, editRecord, cancelEdit}) => {
     return (
-        <Box fill pad='small' direction="row-responsive">
-        <Form style={{width: "100%"}} onSubmit={event=>saveEditedUrl(event)}>
-          <Box width="1500px" fill direction='row-responsive'>
-            <Box width="15%"><FormField><TextInput name="url_link" value={editedRecord.url_link} onChange={(e) => editRecord(e) } placeholder={<Text size="small">url</Text>}></TextInput></FormField></Box>
-            <Box width="15%"><FormField><TextInput name="url_name" value={editedRecord.url_name} onChange={(e) => editRecord(e) } placeholder={<Text size="small">name</Text>}></TextInput></FormField></Box>
-            <Box width="70%"><FormField><TextInput name="url_desc" value={editedRecord.url_desc} onChange={(e) => editRecord(e) } placeholder={<Text size="small">description</Text>}></TextInput></FormField></Box>
-            <Box justify="center" pad="small" direction="row">
-              <Box pad="small"><Button type="submit" primary={false}>{<Tip content="Save"><Save size="medium"/></Tip>}</Button></Box>
-              <Box pad="small">{<Button onClick={ () => cancelEdit() }><Tip content="Cancel"><Redo size="medium"/></Tip></Button>}</Box>
-            </Box>
-          </Box>    
-        </Form>
-        </Box>
+      <div className='container-flex m-2'>
+        <form className="row" onSubmit={event=>saveEditedUrl(event)}>
+          <div className="col-2">
+            <input className="form-control mx-1" id="url_link" placeholder="url" type="text" aria-label="url" value={editedRecord.url_link} onChange={(e) => editRecord(e) }/>
+          </div>
+          <div className="col-2">
+            <input className="form-control mx-1" id="url_name" placeholder="name" type="text" aria-label="name" value={editedRecord.url_name} onChange={(e) => editRecord(e) }/>
+          </div>
+          <div className="col-6">
+            <input className="form-control mx-1" id="url_desc" placeholder="description" type="text" aria-label="description" value={editedRecord.url_desc} onChange={(e) => editRecord(e) }/>
+          </div>
+          <div className="col-2">
+            <button className="btn btn-outline-success mx-1" type="submit">save</button>
+            <button className="btn btn-outline-success mx-1" onClick={ () => cancelEdit()}>cancel</button>
+          </div>
+        </form>
+      </div>
     )
 }
 

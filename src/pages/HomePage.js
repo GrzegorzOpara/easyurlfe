@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext, useCallback } from 'react'
-import { Box } from "grommet";
 import { AuthContext } from '../context/AuthContext'
 import UrlSearchBar from '../components/UrlSearchBar';
 import UrlTable from '../components/UrlTable';
@@ -109,6 +108,8 @@ export const HomePage = () => {
   }
     
   let saveEditedUrl = async(e) => {
+    e.preventDefault()
+
     let response = await fetch(REACT_APP_API_URL + '/api/urls/' + editedRecord.id + '/', {
       method: 'PUT',
       headers: {
@@ -121,8 +122,6 @@ export const HomePage = () => {
         'url_desc':editedRecord.url_desc})
       })
     
-    await response.json()
-
       if (response.status === 200) {
         getUrls()
         setEditing(false)
@@ -135,9 +134,9 @@ export const HomePage = () => {
   }
   
   let editRecord = async(e) => {
-    const newRecord = {...editedRecord, [e.target.name]: e.target.value}
-    setEditedRecord(newRecord)   
-    
+    const newRecord = {...editedRecord, [e.target.id]: e.target.value}
+    setEditedRecord(newRecord)
+    console.log(editedRecord)
   }
   
   let cancelEdit = async() => {
@@ -151,14 +150,14 @@ export const HomePage = () => {
   }, [])  
 
   return (
-  <Box>
+  <div className='container'>
     <UrlSearchBar onChange={filterUrls}/>
     {editing ? 
     <UrlEdit editRecord={editRecord} saveEditedUrl={saveEditedUrl} editedRecord={editedRecord} cancelEdit={cancelEdit}/>
     :
-    <UrlAdd editRecord={editRecord} saveEditedUrl={saveEditedUrl} addUrl={addUrl} editedRecord={editedRecord} cancelEdit={cancelEdit}/>
+    <UrlAdd addUrl={addUrl}/>
     }
     <UrlTable filteredUrls={filteredUrls} setEditing={setEditing} setEditedRecord={setEditedRecord} deleteUrl={deleteUrl}/>   
-  </Box>
+  </div>
   )
 }

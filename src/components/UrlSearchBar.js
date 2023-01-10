@@ -6,12 +6,8 @@ const UrlSearchBar = (props) => {
     }
     
     return (
-      <div>
-        <Box direction="row-responsive">
-        <Box fill pad="small">
-            <TextInput plain placeholder="Search url" onChange={event => filterUrls(event.target.value)}></TextInput>
-        </Box>
-        </Box>
+      <div className="container-flex m-2">
+            <input className="form-control mx-1" placeholder="search" type="text" aria-label="search" onChange={event => filterUrls(event.target.value)} />
       </div>
     )
   }

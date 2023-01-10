@@ -1,21 +1,23 @@
-import { Form, FormField, Text, Box, TextInput, Button, Tip } from "grommet";
-import { AddCircle } from 'grommet-icons';
-
-const UrlAdd = ({editing, saveEditedUrl, addUrl, editedRecord, editRecord, cancelEdit}) => {
+const UrlAdd = ({addUrl}) => {
     return (
-        <Box fill pad='small' direction="row-responsive">
-        <Form style={{width: "100%"}} onSubmit={ event => addUrl(event)}>
-          <Box width="1500px" fill direction='row-responsive'>
-            <Box width="15%"><FormField><TextInput name="url_link" placeholder={<Text size="small">url</Text>}></TextInput></FormField></Box>
-            <Box width="15%"><FormField><TextInput name="url_name" placeholder={<Text size="small">name</Text>}></TextInput></FormField></Box>
-            <Box width="70%"><FormField><TextInput name="url_desc" placeholder={<Text size="small">description</Text>}></TextInput></FormField></Box>
-            <Box justify="center" pad="small" direction="row">
-              <Box pad="small"><Button type="submit" primary={false}>{<Tip content="Add"><AddCircle size="medium"/></Tip>}</Button></Box>
-            </Box>
-          </Box>    
-        </Form>
-        </Box>
+        <div className='container-flex m-2'>
+          <form className="row" onSubmit={ event => addUrl(event)}>
+            <div className="col-2">
+              <input className="form-control mx-1" id="url_link" placeholder="url" type="text" aria-label="url" />
+            </div>
+            <div className="col-2">
+              <input className="form-control mx-1" id="url_name" placeholder="name" type="text" aria-label="name" />
+            </div>
+            <div className="col-7">
+              <input className="form-control mx-1" id="url_desc" placeholder="description" type="text" aria-label="description" />
+            </div>
+            <div className="col-1">
+              <button className="btn btn-outline-success mx-1" type="submit">add</button>
+            </div>
+          </form>
+        </div>
     )
+
 }
 
 export default UrlAdd
