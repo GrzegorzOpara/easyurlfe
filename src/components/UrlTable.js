@@ -25,7 +25,9 @@ const UrlTable = ({filteredUrls, deleteUrl, setEditedRecord, setEditing}) => {
         ) 
         : 
         ( 
-          <span className="h1">no urls found</span>
+          <div className="container-flex m-5 text-center">
+            <span className="h4">no urls found</span>
+          </div>
         )
         }
         </div>

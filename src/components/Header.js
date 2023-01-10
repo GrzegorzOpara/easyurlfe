@@ -19,7 +19,7 @@ const Header = () => {
                 </div>
             {user ? (
                 <div className='container justify-content-end' >
-                    <div className='align-self-center mx-1'>
+                    <div className='d-flex align-self-center mx-1'>
                         <span>{username}</span>
                     </div>
                     <button type="button" className="btn btn-primary mx-1" onClick={logoutUser}>Logout</button>
