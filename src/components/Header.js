@@ -12,9 +12,12 @@ const Header = () => {
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light my-2">
-                <div className='container col-1'>
-                    <div className='align-self-center'>
-                        <span className="navbar-brand h1">EasyUrl</span>
+                <div className='container col-4'>
+                    <div className='d-flex align-self-center'>
+                        <img src={process.env.PUBLIC_URL + "/favicon.ico"} alt="" width="40" height="40" className="d-inline-block align-text-top" />
+                        <div className='d-flex align-self-center mx-2'>
+                            <span className='logo-text'><h5>Easy Url - friendly links</h5></span>
+                        </div>
                     </div>
                 </div>
             {user ? (

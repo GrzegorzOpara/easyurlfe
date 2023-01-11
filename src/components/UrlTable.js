@@ -14,15 +14,15 @@ const UrlTable = ({filteredUrls, deleteUrl, setEditedRecord, setEditing}) => {
             <tbody>
             {[...filteredUrls].sort((a, b) => b.id - a.id).map(url => (
               <tr key={url.id}>
-                <th scope='col'><a href={url.url_link}>{url.url_link}</a></th>
-                <th scope='col'>{url.url_name}</th>
-                <th scope='col'>
+                <td><a href={url.url_link}>{url.url_link}</a></td>
+                <td>{url.url_name}</td>
+                <td>
                   <div className="d-flex">
                     <button className="btn btn-outline-danger mx-1" type="submit" onClick={() => deleteUrl(url.id)}>delete</button>
                     <button className="btn btn-outline-warning mx-1" type="submit" onClick={() => {setEditedRecord(url); setEditing(true)}}>edit</button>
                   </div>
-                </th>
-                <th scope='col'>{url.url_desc}</th>
+                </td>
+                <td>{url.url_desc}</td>
               </tr>
             ))}
             </tbody>
