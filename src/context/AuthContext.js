@@ -16,17 +16,20 @@ export const AuthProvider = ({children}) => {
 
     let loginUser = async (e) => {    
         e.preventDefault()
+
+        // set username and password depending if it comes from header on registration form
+        const username = e.target.username ? e.target.username.value : e.target.reg_username.value
+        const password = e.target.password ? e.target.password.value : e.target.reg_password.value
         
-        const val = e.target.username.value
-        setUsername(val)
-        localStorage.setItem('username', val)
+        setUsername(username)
+        localStorage.setItem('username', username)
 
         let response = await fetch(REACT_APP_API_URL + '/api/token/', {
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
             },
-            body:JSON.stringify({'username':e.target.username.value, 'password':e.target.password.value})
+            body:JSON.stringify({'username':username, 'password':password})
         })
         let data = await response.json()
 
