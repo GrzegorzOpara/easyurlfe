@@ -1,66 +1,35 @@
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { AuthContext } from '../context/AuthContext';
-import { Form, FormField, Text, Box, TextInput, Button } from "grommet";
 import validator from 'validator';
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 
 const CreateUserPage = () => {
     // state
-    const [email, setEmail] = useState(null)
-    const [validEmail, setValidEmail] = useState(false)
-    const [emailMatch, setEmailMatch] = useState(false)
-    const [validUsernameLen, setValidUsernameLen] = useState(false)
+    const [validEmail, setValidEmail] = useState(true)
+    const [validUsername, setValidUsername] = useState(true)
     
-    const [password, setPassword] = useState(null)
-    const [validPassword, setValidPassword] = useState(false)
-    const [passwordsMatch, setPasswordsMatch] = useState(false)
-    const [userAlreadyExists, setUserAlreadyExists] = useState(false)
+    const [validPassword, setValidPassword] = useState(true)
+    const [passwordsMatch, setPasswordsMatch] = useState(true)
+    const [userDontExist, setUserDontExist] = useState(true)
     
-    const [validForm, setValidForm] = useState(false)
-
     // auth
     let {loginUser} = useContext(AuthContext)
 
-    useEffect(() => {
-        if (validEmail && validPassword && emailMatch && passwordsMatch && validUsernameLen)
-            {
-                setValidForm(true)
-                // console.log("changed to true")
-            }
-        else
-            {
-                setValidForm(false) // should be false - testing
-                // console.log("changed to false")
-            }
-    }, [validEmail, validPassword, emailMatch, passwordsMatch, validUsernameLen, validForm])
-
-    const addUser = async(e) => {
-        e.preventDefault()
-        
-        let response = await fetch(REACT_APP_API_URL + '/api/users/', {
-          method: 'POST',
-          headers: {
-            'Content-Type':'application/json'
-          },
-          body:JSON.stringify({ 
-            'username':e.target.username.value,
-            'email':e.target.emailPrimary.value,
-            'password':e.target.password.value})
-          })
-     
-          if (response.status === 201) {
-            loginUser(e)
-          }
-          else {
-            console.log('Error adding new user!')
-            setUserAlreadyExists(true)
-          }
+    const validateEmail = (e) => {
+        // validate email
+        if (validator.isEmail(e.target.form.reg_email.value) !== true) {
+            setValidEmail(false)
         }
-        
+        else {
+            setValidEmail(true)
+        }
+    }
+
     const validatePassword = (e) => {
+        // validate password complexity
         const passwordComplexity = { 
-            minLength: 12, 
+            minLength: 8, 
             minLowercase: 1, 
             minUppercase: 1, 
             minNumbers: 1, 
@@ -71,93 +40,123 @@ const CreateUserPage = () => {
             pointsForContainingLower: 10, 
             pointsForContainingUpper: 10, 
             pointsForContainingNumber: 10, 
-            pointsForContainingSymbol: 10 
+            pointsForContainingSymbol: 10
         }
-        if (validator.isStrongPassword(e, passwordComplexity) === true)
+
+        if (validator.isStrongPassword(e.target.form.reg_password.value, passwordComplexity) !== true) {
+            setValidPassword(false)
+        }
+        else {
             setValidPassword(true)
-        else
-        setValidPassword(false)
-    }
-
-    const handlePrimaryPasswordChange = (e) => {
-        setPassword(e.target.value)
-        validatePassword(e.target.value)
-    }
-
-    const handleSecondaryPasswordChange = (e) => {
-        if (e.target.value === password)
-            setPasswordsMatch(true)
-        else
-            setPasswordsMatch(false)
-    }
-
-    const validateEmail = (e) => {
-        if (validator.isEmail(e)) {
-            setValidEmail(true)
-            setEmail(e)
         }
-        else
-            setValidEmail(false)
+
+
+        // validate password match
+        if (e.target.form.reg_password.value !== e.target.form.reg_passwordSecondary.value) {
+            setPasswordsMatch(false)
+        } 
+        else {
+            setPasswordsMatch(true)
+        }
     }
 
+    const validateUser = (e) => { 
+        // validate user len and alphanumeric
+        setUserDontExist(true)
+
+        if (validator.isLength(e.target.form.reg_username.value, {min: 4}) && validator.isAlphanumeric(e.target.form.reg_username.value)) {
+            setValidUsername(true)
+        }
+        else {
+            setValidUsername(false)
+        }   
+    }
+
+    const addUser = async(e) => {
+        e.preventDefault()
+  
+        let response = await fetch(REACT_APP_API_URL + '/api/users/', {
+            method: 'POST',
+            headers: {
+            'Content-Type':'application/json'
+            },
+            body:JSON.stringify({ 
+            'username':e.target.reg_username.value,
+            'email':e.target.reg_email.value,
+            'password':e.target.reg_password.value})
+        })
     
-    const handleUsernameChange = (e) => {
-        if (e.target.value.length > 3 && validator.isAlphanumeric(e.target.value)) {
-            setValidUsernameLen(true)
-            setUserAlreadyExists(false)
-            }
-        else
-            setValidUsernameLen(false)
+        if (response.status === 201) {
+            loginUser(e)
+        }
+        else {
+            // console.log('Error adding new user!')
+            setUserDontExist(false)
+        }
     }
-
-    const handleSecondaryEmailChange = (e) => {
-        if (e.target.value === email)
-            setEmailMatch(true)
-        else
-            setEmailMatch(false)
-    }
-
+        
     return (
-        <Box fill justify="center" direction="row-responsive">
-            <Box width='medium'>
-                <Form onSubmit={(event) => addUser(event)}>
-                    <Box pad="small">
-                        <FormField>
-                            <Text size="xsmall">login</Text><TextInput size="xsmall" name="username" onChange={(e) => handleUsernameChange(e)} ></TextInput>
-                            {validUsernameLen? null : <Box>Username min. 4 characters, alphanumeric!</Box>}
-                        </FormField>
-                    </Box>
-                    <Box pad="small">
-                        <FormField>
-                            <Text size="xsmall">password</Text><TextInput size="xsmall" type="password" name="password" onChange={(e) => handlePrimaryPasswordChange(e)}></TextInput>
-                            {validPassword? null : <Box>Passwords doesn't meet complexity requirements</Box>}
-                        </FormField>
-                    </Box>
-                    <Box pad="small">
-                        <FormField>
-                            <Text size="xsmall">repeat password</Text><TextInput size="xsmall" type="password" name="passwordSecondary" onChange={(e) => handleSecondaryPasswordChange(e)}></TextInput>
-                            {passwordsMatch? null : <Box>Passwords doesn't match</Box>}
-                        </FormField>
-                    </Box>
-                    <Box pad="small">
-                        <FormField>
-                            <Text size="xsmall">email</Text><TextInput size="xsmall" name="emailPrimary" onBlur={(e) => validateEmail(e.target.value)} ></TextInput>
-                            {validEmail? null : <Box>The email address is not valid</Box>}
-                        </FormField>
-                    </Box>
-                    <Box pad="small">
-                        <FormField>
-                            <Text size="xsmall">repeat email</Text><TextInput size="xsmall" name="emailSecondary" onChange={(e) => handleSecondaryEmailChange(e)}></TextInput>
-                            {emailMatch? null : <Box>Email doesn't match</Box>}
-                        </FormField>
-                    </Box>
-                    <Box pad="small">
-                        <Button type="submit" label={<Text size="medium">Create User</Text>} primary={true} disabled={validForm? false : true}></Button>
-                        {userAlreadyExists? <Box>This usernane is already taken!</Box> : null}
-                    </Box>
-                </Form>
-            </Box>
-        </Box>
+        <div className="container">
+            <div className="row d-flex justify-content-center align-items-center">
+            <div className="col-lg-12 col-xl-11">
+                <div className="card text-black">
+                <div className="card-body p-md-5">
+                    <div className="row justify-content-center">
+                    <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+
+                        <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
+
+                        <form className="mx-1 mx-md-4" onSubmit={(e) => addUser(e)}>
+
+                        <div className="d-flex flex-row align-items-center mb-4">
+                            <i className="fas fa-user fa-lg me-3 fa-fw"></i>
+                            <div className="form-outline flex-fill mb-0">
+                                <label className="form-label" htmlFor="reg_username">Username</label>
+                                <input type="text" id="reg_username" className={(validUsername && userDontExist) ? "form-control" : "form-control is-invalid"} onChange={(e) => {validateUser(e)}} />
+                                {<div className="invalid-feedback">{userDontExist? "Please provide a valid username (min. 4 characters, at least 1 upper-case, 1 lower-case and 1 number)" : "This user aleady exists"}</div>}
+                            </div>
+                        </div>
+
+                        <div className="d-flex flex-row align-items-center mb-4">
+                            <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                            <div className="form-outline flex-fill mb-0">
+                                <label className="form-label" htmlFor="reg_email">Your Email</label>
+                                <input type="email" id="reg_email" className={validEmail ? "form-control" : "form-control is-invalid"} onChange={(e) => validateEmail(e)} />
+                                <div className="invalid-feedback">Please provide a valid email</div>
+                            </div>
+                        </div>
+
+                        <div className="d-flex flex-row align-items-center mb-4">
+                            <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
+                            <div className="form-outline flex-fill mb-0">
+                                <label className="form-label" htmlFor="reg_password">Password</label>
+                                <input type="password" id="reg_password" className={validPassword ? "form-control" : "form-control is-invalid"} onChange={(e) => validatePassword(e)} />
+                                <div className="invalid-feedback">Please provide a valid password (min. 8 characters, alphanumeric)</div>
+                            </div>
+                        </div>
+
+                        <div className="d-flex flex-row align-items-center mb-4">
+                            <i className="fas fa-key fa-lg me-3 fa-fw"></i>
+                            <div className="form-outline flex-fill mb-0">
+                                <label className="form-label" htmlFor="reg_passwordSecondary">Repeat your password</label>
+                                <input type="password" id="reg_passwordSecondary" className={passwordsMatch ? "form-control" : "form-control is-invalid"} onChange={(e) => validatePassword(e)} />
+                                <div className="invalid-feedback">Please provide passwords that match</div>
+                            </div>
+                        </div>
+
+                        <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                            <button type="submit" className="btn btn-primary btn-lg">Register</button>
+                        </div>
+
+                        </form>
+
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
     )
 }
 

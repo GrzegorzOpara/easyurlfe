@@ -1,7 +1,6 @@
 import React, {useContext} from 'react'
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../context/AuthContext';
-import { Button, Form, FormField, TextInput, Text, Box } from "grommet";
 
 const Header = () => {
     let {user, username, loginUser, logoutUser} = useContext(AuthContext)
@@ -12,43 +11,31 @@ const Header = () => {
     }
 
     return (
-        <div>
+        <nav className="navbar navbar-expand-lg navbar-light bg-light my-2">
+                <div className='container col-1'>
+                    <div className='align-self-center'>
+                        <span className="navbar-brand h1">EasyUrl</span>
+                    </div>
+                </div>
             {user ? (
-                <div>
-                <Box justify = "end" direction="row-responsive" border={{color:"brand", size: "medium", side: "bottom"}}>
-                    <Box pad='small' alignSelf='center'>
-                        <Text size="medium">{username}</Text>
-                    </Box>
-                    <Box pad='small'>
-                        <Button label={<Text size="medium">Logout</Text>} onClick={logoutUser} primary={true} />
-                    </Box>
-                </Box>
+                <div className='container justify-content-end' >
+                    <div className='d-flex align-self-center mx-1'>
+                        <span>{username}</span>
+                    </div>
+                    <button type="button" className="btn btn-primary mx-1" onClick={logoutUser}>Logout</button>
                 </div>
             ) : (
-                <div>
-                <Box pad='small' justify = "end" direction="row-responsive" border={{color:"brand", size: "medium", side: "bottom"}}>
-                    <Form
-                    onSubmit={(event)=>loginUser(event)} >
-                        <Box direction="row">
-                            <FormField>
-                                <TextInput name="username" placeholder={<Text size="small"><i>Username</i></Text>}/>
-                            </FormField>
-                            <FormField>
-                                <TextInput name="password" placeholder={<Text size="small"><i>Password</i></Text>} type='password'/>
-                            </FormField>
-                            <Box justify="center" pad="small">
-                                <Button label={<Text size="medium">Login</Text>} type="submit" primary={true} />
-                            </Box>
-                            <Box justify="center" pad="small">
-                                <Button onClick={handleRegister} label={<Text size="medium">Register</Text>} type="button" primary={true} />
-                            </Box>
-                        </Box>
-                    </Form>
-                    </Box>
+                <div className='container justify-content-end'>
+                    <form className="d-flex" onSubmit={(event)=>loginUser(event)}>
+                        <input className="form-control mx-1" id="username" placeholder="login" type="text" aria-label="username" />
+                        <input className="form-control mx-1" id="password" placeholder="password" type="password" aria-label="password" />
+                        <button className="btn btn-outline-primary mx-1" type="submit">Login</button>
+                        <button className="btn btn-outline-primary mx-1" type="button" onClick={handleRegister}>Register</button>
+                    </form>
                 </div>
             )}
             
-        </div>
+        </nav>
   )
 }
 
