@@ -17,7 +17,7 @@ const WelcomePage = () => {
             <div className="container">
                 <h3>About the project</h3>
                 <h4>Code repository</h4>
-                    <p>The applicon code is availabe in my <a href="https://github.com/GrzegorzOpara">github</a> and it consists three repositories:</p>
+                    <p>The application code is availabe in my <a href="https://github.com/GrzegorzOpara">github</a> and it consists three repositories:</p>
                 <ul>
                     <li><a href="https://github.com/GrzegorzOpara/easyurlbe">backend</a></li>
                     <li><a href="https://github.com/GrzegorzOpara/easyurlfe">frontend</a></li>
