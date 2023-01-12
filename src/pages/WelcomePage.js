@@ -8,7 +8,7 @@ const WelcomePage = () => {
                 <h3>Welcome!</h3>
                     <p><strong>Easy Url</strong> is a simple app that helps to storge, organize and quickly search for links.</p> 
                 <h3>Feature list</h3>
-                <h4>Release 0.9</h4>
+                <h4>Release 0.1</h4>
                 <ul>
                     <li>add, edit and remove links</li>
                     <li>effectively search links using <a href="https://en.wikipedia.org/wiki/Approximate_string_matching">fuzzy-search</a> powered by <a href="https://fusejs.io/">Fuse.js</a></li>
@@ -27,7 +27,7 @@ const WelcomePage = () => {
                     <ul>
                         <li>Backend: <a href="https://www.djangoproject.com/">Django</a></li>
                         <li>Frontend: <a href="https://reactjs.org/">React</a> and <a href="https://getbootstrap.com/">Bootstrap</a></li>
-                        <li>Hosting: <a href="https://azure.microsoft.com/en-us/">Azure</a> (Azure Static Web App, Azure Web App, Azure MySQL)</li>
+                        <li>Hosting: <a href="https://azure.microsoft.com/en-us/">Azure</a> (Azure Static Web App (FE), Azure Web App (BE), Azure MySQL (BE))</li>
                     </ul>
             </div>
             <div className="container">
