@@ -14,7 +14,7 @@ const Header = () => {
         <nav className="navbar navbar-expand-lg navbar-light bg-light my-2">
                 <div className='container col-4'>
                     <div className='d-flex align-self-center'>
-                        <img src={process.env.PUBLIC_URL + "/favicon.ico"} alt="" width="40" height="40" className="d-inline-block align-text-top" />
+                        <img src={process.env.PUBLIC_URL + "/favicon.ico"} alt="Easy Url header logo" width="40" height="40" className="d-inline-block align-text-top" />
                         <div className='d-flex align-self-center mx-2'>
                             <span className='logo-text'><h5>Easy Url - friendly links</h5></span>
                         </div>
