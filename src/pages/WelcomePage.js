@@ -6,32 +6,22 @@ const WelcomePage = () => {
             </div>
             <div className="container">
                 <h3>Welcome!</h3>
-                <p><strong>Easy Url</strong> is a simple app that helps to storge, organize and quickly search for links.</p> 
+                    <p><strong>Easy Url</strong> is a simple app that helps to storge, organize and quickly search for links.</p> 
                 <h3>Feature list</h3>
                 <h4>Release 0.9</h4>
                 <ul>
-                    <li>
-                        add, edit and remove links
-                    </li>
-                    <li>
-                        effectively search links using <a href="https://en.wikipedia.org/wiki/Approximate_string_matching">fuzzy-search</a> powered by <a href="https://fusejs.io/">Fuse.js</a>
-                    </li>
+                    <li>add, edit and remove links</li>
+                    <li>effectively search links using <a href="https://en.wikipedia.org/wiki/Approximate_string_matching">fuzzy-search</a> powered by <a href="https://fusejs.io/">Fuse.js</a></li>
                 </ul>
             </div>
             <div className="container">
                 <h3>About the project</h3>
                 <h4>Code repository</h4>
-                <p>The applicon code is availabe in my <a href="https://github.com/GrzegorzOpara">github</a> and it consists three repositories:</p>
+                    <p>The applicon code is availabe in my <a href="https://github.com/GrzegorzOpara">github</a> and it consists three repositories:</p>
                 <ul>
-                    <li>
-                        <a href="https://github.com/GrzegorzOpara/easyurlbe">backend</a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/GrzegorzOpara/easyurlfe">frontend</a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/GrzegorzOpara/easyurlinfra">infrastructure</a>
-                    </li>
+                    <li><a href="https://github.com/GrzegorzOpara/easyurlbe">backend</a></li>
+                    <li><a href="https://github.com/GrzegorzOpara/easyurlfe">frontend</a></li>
+                    <li><a href="https://github.com/GrzegorzOpara/easyurlinfra">infrastructure</a></li>
                 </ul>
                 <h4>Stack</h4>
                     <ul>
@@ -42,9 +32,9 @@ const WelcomePage = () => {
             </div>
             <div className="container">
                 <h3>License</h3>
-                <p><strong>MIT License</strong></p>
+                <p className="lead">MIT License</p>
 
-                <p>Copyright (c) 2022 - Grzegorz Opara</p>
+                <p className="lead">Copyright (c) 2022 - Grzegorz Opara</p>
                 <p>
                 Permission is hereby granted, free of charge, to any person obtaining a copy
                 of this software and associated documentation files (the "Software"), to deal
