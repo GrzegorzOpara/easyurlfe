@@ -1,6 +1,7 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import { AuthContext } from '../context/AuthContext';
 import validator from 'validator';
+import Reaptcha from 'reaptcha';
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 
@@ -15,6 +16,10 @@ const CreateUserPage = () => {
     
     // auth
     let {loginUser} = useContext(AuthContext)
+
+    //reCaptcha
+    const [captchaVerified, setCaptchaVerified] = useState(null)
+    const captchaRef = useRef(null)
 
     const validateEmail = (e) => {
         // validate email
@@ -93,7 +98,12 @@ const CreateUserPage = () => {
             // console.log('Error adding new user!')
             setUserDontExist(false)
         }
+
     }
+
+    const verify = () => {
+        setCaptchaVerified(true)
+        }
         
     return (
         <div className="container">
@@ -143,9 +153,15 @@ const CreateUserPage = () => {
                                 <div className="invalid-feedback">Please provide passwords that match</div>
                             </div>
                         </div>
-
+                        <div className="d-flex justify-content-center mb-4">
+                            <Reaptcha 
+                                sitekey={process.env.REACT_APP_SITE_KEY}
+                                ref={captchaRef}
+                                onVerify={() => verify()} 
+                            />
+                        </div>
                         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                            <button type="submit" className="btn btn-primary btn-lg">Register</button>
+                            <button type="submit" className="btn btn-primary btn-lg" disabled={!captchaVerified}>Register</button>
                         </div>
 
                         </form>
