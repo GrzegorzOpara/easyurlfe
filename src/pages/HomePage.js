@@ -7,7 +7,7 @@ import UrlEdit from '../components/UrlEdit';
 import Fuse from 'fuse.js';
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
-export const HomePage = () => {
+const HomePage = () => {
   // urls
   let [urls, setUrls] = useState([])
   let [filteredUrls, setFilteredUrls] = useState([]);
@@ -161,3 +161,5 @@ export const HomePage = () => {
   </div>
   )
 }
+
+export default HomePage
