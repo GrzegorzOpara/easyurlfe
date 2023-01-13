@@ -49,6 +49,8 @@ jobs:
           skip_app_build: false
         env: # Add environment variables here
           REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
+          REACT_APP_SITE_KEY: ${{ secrets.REACT_APP_SITE_KEY }}
+          REACT_APP_SECRET_KEY: ${{ secrets.REACT_APP_SECRET_KEY }}
 
   # close_pull_request_job:
   #  if: github.event_name == 'pull_request' && github.event.action == 'closed'
