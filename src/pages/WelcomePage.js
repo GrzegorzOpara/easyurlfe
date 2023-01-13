@@ -12,6 +12,7 @@ const WelcomePage = () => {
                 <ul>
                     <li>add, edit and remove links</li>
                     <li>effectively search links using <a href="https://en.wikipedia.org/wiki/Approximate_string_matching">fuzzy-search</a> powered by <a href="https://fusejs.io/">Fuse.js</a></li>
+                    <li>registering new users, securing registration using recaptcha</li>
                 </ul>
             </div>
             <div className="container">
