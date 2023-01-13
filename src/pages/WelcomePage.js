@@ -1,8 +1,10 @@
+import { Link } from "react-router-dom";
+
 const WelcomePage = () => {
     return (
         <div className="container">
             <div className="container">
-                <img class="rounded mx-auto d-block" src={process.env.PUBLIC_URL + "/easyurl_logo_512.png"} width="300" height="300" alt="Easy Url Logo" />
+                <img className="rounded mx-auto d-block" src={process.env.PUBLIC_URL + "/easyurl_logo_512.png"} width="300" height="300" alt="Easy Url Logo" />
             </div>
             <div className="container">
                 <h3>Welcome!</h3>
@@ -11,24 +13,24 @@ const WelcomePage = () => {
                 <h4>Release 0.1</h4>
                 <ul>
                     <li>add, edit and remove links</li>
-                    <li>effectively search links using <a href="https://en.wikipedia.org/wiki/Approximate_string_matching">fuzzy-search</a> powered by <a href="https://fusejs.io/">Fuse.js</a></li>
+                    <li>effectively search links using <Link to="https://en.wikipedia.org/wiki/Approximate_string_matching">fuzzy-search</Link> powered by <Link to="https://fusejs.io/">Fuse.js</Link></li>
                     <li>registering new users, securing registration using recaptcha</li>
                 </ul>
             </div>
             <div className="container">
                 <h3>About the project</h3>
                 <h4>Code repository</h4>
-                    <p>The application code is availabe in my <a href="https://github.com/GrzegorzOpara">github</a> and it consists three repositories:</p>
+                    <p>The application code is availabe in my <Link to="https://github.com/GrzegorzOpara">github</Link> and it consists three repositories:</p>
                 <ul>
-                    <li><a href="https://github.com/GrzegorzOpara/easyurlbe">backend</a></li>
-                    <li><a href="https://github.com/GrzegorzOpara/easyurlfe">frontend</a></li>
-                    <li><a href="https://github.com/GrzegorzOpara/easyurlinfra">infrastructure</a></li>
+                    <li><Link to="https://github.com/GrzegorzOpara/easyurlbe">backend</Link></li>
+                    <li><Link to="https://github.com/GrzegorzOpara/easyurlfe">frontend</Link></li>
+                    <li><Link to="https://github.com/GrzegorzOpara/easyurlinfra">infrastructure</Link></li>
                 </ul>
                 <h4>Stack</h4>
                     <ul>
-                        <li>Backend: <a href="https://www.djangoproject.com/">Django</a></li>
-                        <li>Frontend: <a href="https://reactjs.org/">React</a> and <a href="https://getbootstrap.com/">Bootstrap</a></li>
-                        <li>Hosting: <a href="https://azure.microsoft.com/en-us/">Azure</a> (Azure Static Web App (FE), Azure Web App (BE), Azure MySQL (BE))</li>
+                        <li>Backend: <Link to="https://www.djangoproject.com/">Django</Link></li>
+                        <li>Frontend: <Link to="https://reactjs.org/">React</Link> and <Link to="https://getbootstrap.com/">Bootstrap</Link></li>
+                        <li>Hosting: <Link to="https://azure.microsoft.com/en-us/">Azure</Link> (Azure Static Web App (FE), Azure Web App (BE), Azure MySQL (BE))</li>
                     </ul>
             </div>
             <div className="container">

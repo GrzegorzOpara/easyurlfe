@@ -5,7 +5,7 @@ import Reaptcha from 'reaptcha';
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 
-const CreateUserPage = () => {
+export const CreateUserPage = () => {
     // state
     const [validEmail, setValidEmail] = useState(true)
     const [validUsername, setValidUsername] = useState(true)

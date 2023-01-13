@@ -1,11 +1,12 @@
 // import './App.css';
-import { HomePage } from './pages/HomePage'
-import { Header } from './components/Header'
+import HomePage from './pages/HomePage'
+import Header from './components/Header'
 import { PrivateRoutes } from './utils/PrivateRoutes'
 import { AuthProvider } from './context/AuthContext'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import CreateUserPage from './pages/CreateUserPage';
 import WelcomePage from './pages/WelcomePage';
+import LoginPage from './pages/LoginPage'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             </Route>
             <Route path="/welcome" element={<WelcomePage />}/>
             <Route path="/create" element={<CreateUserPage />}/>
+            <Route path="/login" element={<LoginPage />}/>
           </Routes>
         </AuthProvider>
       </Router>   
