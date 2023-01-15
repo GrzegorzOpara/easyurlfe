@@ -31,7 +31,7 @@ const PasswordChangePage = () => {
           if (response.status === 200) {
             navigate('/login')
           } else {
-            console.log('Error reseting password!')
+            navigate('/password-reset')
           }
       }
 
