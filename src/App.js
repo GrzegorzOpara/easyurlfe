@@ -8,6 +8,7 @@ import CreateUserPage from './pages/CreateUserPage';
 import WelcomePage from './pages/WelcomePage';
 import LoginPage from './pages/LoginPage'
 import PasswordResetPage from './pages/PasswordResetPage';
+import PasswordChangePage from './pages/PasswordChangePage';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/create" element={<CreateUserPage />}/>
             <Route path="/login" element={<LoginPage />}/>
             <Route path="/password-reset" element={<PasswordResetPage />}/>
+            <Route path="/password-change" element={<PasswordChangePage />}/>
           </Routes>
         </AuthProvider>
       </Router>   
