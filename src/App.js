@@ -10,6 +10,7 @@ import LoginPage from './pages/LoginPage'
 import PasswordResetPage from './pages/PasswordResetPage';
 import PasswordChangePage from './pages/PasswordChangePage';
 
+
 function App() {
   return (
     <div className='container'>
@@ -23,8 +24,8 @@ function App() {
             <Route path="/welcome" element={<WelcomePage />}/>
             <Route path="/create" element={<CreateUserPage />}/>
             <Route path="/login" element={<LoginPage />}/>
-            <Route path="/password-reset" element={<PasswordResetPage />}/>
-            <Route path="/password-change" element={<PasswordChangePage />}/>
+            <Route path="/password-reset" exact element={<PasswordResetPage />}/>
+            <Route path="/password-chnage/:encoded_pk/:token" element={<PasswordChangePage />}/>
           </Routes>
         </AuthProvider>
       </Router>   

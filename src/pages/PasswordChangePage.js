@@ -1,10 +1,39 @@
 import validator from 'validator';
+import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 
 const PasswordChangePage = () => {
+    // API CALL: localhost:8000/api/users/password-reset/NDg/bi13vi-a2bf021b2a11316b59f199f4a9ad5f07/
+    // LINK: localhost:3000/password-chnage/NDg/bi2h8g-cc60025f66395b6fb37b9812229c1aef/
+    const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 
     const [validPassword, setValidPassword] = useState(false)
     const [passwordsMatch, setPasswordsMatch] = useState(false)
+    const navigate = useNavigate()
+
+    let params = useParams();
+
+    const changePassword = async(e) => {
+        e.preventDefault()
+
+        console.log(e)
+        
+        let response = await fetch(REACT_APP_API_URL + '/api/users/password-reset/' + params.encoded_pk + '/' + params.token + '/', {
+          method: 'PATCH',
+          headers: {
+            'Content-Type':'application/json'
+          },
+          body:JSON.stringify({'password':e.target.change_password.value})
+          })
+    
+          await response.json()
+    
+          if (response.status === 200) {
+            navigate('/login')
+          } else {
+            console.log('Error reseting password!')
+          }
+      }
 
     const validatePassword = (e) => {
         // validate password complexity
@@ -51,7 +80,7 @@ const PasswordChangePage = () => {
 
                         <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Set up new password</p>
 
-                        <form className="mx-1 mx-md-4" onSubmit={ console.log() }>
+                        <form className="mx-1 mx-md-4" onSubmit={ (e) => changePassword(e) }>
 
                         <div className="d-flex flex-row align-items-center mb-4">
                             <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
