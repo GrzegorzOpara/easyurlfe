@@ -1,4 +1,12 @@
 const UrlTable = ({filteredUrls, deleteUrl, setEditedRecord, setEditing}) => {
+
+    const addHttpIfMissing = (url) => {
+      const httpRegExp = RegExp('^http[s]?://')
+      if (!url.match(httpRegExp))
+        url = 'http://' + url.replace(/^\/*/,'')
+      return url
+    }
+
     return (
         <div className="container-flex m-2'">
           {filteredUrls.length !== 0 ? (
@@ -14,7 +22,7 @@ const UrlTable = ({filteredUrls, deleteUrl, setEditedRecord, setEditing}) => {
             <tbody>
             {[...filteredUrls].sort((a, b) => b.id - a.id).map(url => (
               <tr key={url.id}>
-                <td><a href={url.url_link}>{url.url_link}</a></td>
+                <td><a href={addHttpIfMissing(url.url_link)}>{url.url_link}</a></td>
                 <td>{url.url_name}</td>
                 <td>
                   <div className="d-flex">
