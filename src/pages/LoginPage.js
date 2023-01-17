@@ -1,5 +1,5 @@
 import { useContext} from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from '../context/AuthContext';
 
 const LoginPage = () => {
@@ -37,6 +37,9 @@ const LoginPage = () => {
                                 <label className="form-label" htmlFor="password">Password</label>
                                 <input type="password" id="reg_password" className="form-control" />
                             </div>
+                        </div>
+                        <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                            <Link to='/password-reset'><span>Forgot your password?</span></Link>
                         </div>
                         
                         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">

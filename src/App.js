@@ -7,6 +7,9 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import CreateUserPage from './pages/CreateUserPage';
 import WelcomePage from './pages/WelcomePage';
 import LoginPage from './pages/LoginPage'
+import PasswordResetPage from './pages/PasswordResetPage';
+import PasswordChangePage from './pages/PasswordChangePage';
+
 
 function App() {
   return (
@@ -21,6 +24,8 @@ function App() {
             <Route path="/welcome" element={<WelcomePage />}/>
             <Route path="/create" element={<CreateUserPage />}/>
             <Route path="/login" element={<LoginPage />}/>
+            <Route path="/password-reset" exact element={<PasswordResetPage />}/>
+            <Route path="/password-change/:encoded_pk/:token" element={<PasswordChangePage />}/>
           </Routes>
         </AuthProvider>
       </Router>   
