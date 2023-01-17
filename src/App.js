@@ -25,7 +25,7 @@ function App() {
             <Route path="/create" element={<CreateUserPage />}/>
             <Route path="/login" element={<LoginPage />}/>
             <Route path="/password-reset" exact element={<PasswordResetPage />}/>
-            <Route path="/password-chnage/:encoded_pk/:token" element={<PasswordChangePage />}/>
+            <Route path="/password-change/:encoded_pk/:token" element={<PasswordChangePage />}/>
           </Routes>
         </AuthProvider>
       </Router>   
