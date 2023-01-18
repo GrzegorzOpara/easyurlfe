@@ -22,12 +22,12 @@ export const PasswordResetPage = () => {
     let requestPasswordReset = async(e) => {
         e.preventDefault()
 
-        let response = await fetch(REACT_APP_API_URL + '/users/request-password-reset/', {
+        let response = await fetch(REACT_APP_API_URL + '/api/users/request-password-reset/', {
           method: 'POST',
           headers: {
             'Content-Type':'application/json'
           },
-          body:JSON.stringify({'url_link':e.target.reset_email.value})
+          body:JSON.stringify({'email':e.target.reset_email.value})
         })
     
           await response.json()
