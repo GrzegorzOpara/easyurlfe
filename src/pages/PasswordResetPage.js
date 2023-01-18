@@ -27,7 +27,7 @@ export const PasswordResetPage = () => {
           headers: {
             'Content-Type':'application/json'
           },
-          body:JSON.stringify({'url_link':e.target.form.reset_email.value})
+          body:JSON.stringify({'url_link':e.target.reset_email.value})
         })
     
           await response.json()
