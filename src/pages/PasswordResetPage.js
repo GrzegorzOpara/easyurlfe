@@ -2,7 +2,9 @@ import validator from 'validator';
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-const PasswordResetPage = () => {
+const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
+
+export const PasswordResetPage = () => {
 
     const [validEmail, setValidEmail] = useState(true)
     const navigate = useNavigate()
