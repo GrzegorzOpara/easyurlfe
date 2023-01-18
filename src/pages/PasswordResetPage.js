@@ -6,12 +6,12 @@ const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 
 export const PasswordResetPage = () => {
 
-    const [validEmail, setValidEmail] = useState(true)
+    const [validEmail, setValidEmail] = useState(false)
     const navigate = useNavigate()
 
     const validateEmail = (e) => {
         // validate email
-        if (validator.isEmail(e.target.form.reset_email.value) !== true) {
+        if (validator.isEmail(e.target.reset_email.value) !== true) {
             setValidEmail(false)
         }
         else {
@@ -21,6 +21,8 @@ export const PasswordResetPage = () => {
 
     let requestPasswordReset = async(e) => {
         e.preventDefault()
+
+        console.log(e)
 
         let response = await fetch(REACT_APP_API_URL + '/users/request-password-reset/', {
           method: 'POST',
@@ -66,7 +68,7 @@ export const PasswordResetPage = () => {
                         </div>
                         
                         <div className="d-flex justify-content-center mb-3 mb-lg-4">
-                            <button type="submit" className="btn btn-primary btn-lg" >Send a reset link</button>
+                            <button type="submit" className="btn btn-primary btn-lg" disabled={!validEmail} >Send a reset link</button>
                         </div>
 
                         </form>
