@@ -4,6 +4,7 @@ import { useState } from "react";
 const PasswordResetPage = () => {
 
     const [validEmail, setValidEmail] = useState(true)
+    const navigate = useNavigate()
 
     const validateEmail = (e) => {
         // validate email
@@ -14,6 +15,27 @@ const PasswordResetPage = () => {
             setValidEmail(true)
         }
     }
+
+    let requestPasswordReset = async(e) => {
+        e.preventDefault()
+
+        let response = await fetch(REACT_APP_API_URL + '/users/request-password-reset/', {
+          method: 'POST',
+          headers: {
+            'Content-Type':'application/json'
+          },
+          body:JSON.stringify({'url_link':e.target.form.reset_email.value})
+        })
+    
+          await response.json()
+    
+          if (response.status === 200) {
+            console.log('Password reset link sent to email address!')
+            navigate('/')
+          } else {
+            console.log('Error adding new entry')
+          }
+      }
 
     return (
         <div className="container">
@@ -26,7 +48,7 @@ const PasswordResetPage = () => {
 
                         <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Password reset</p>
 
-                        <form className="mx-1 mx-md-4" onSubmit={ console.log() }>
+                        <form className="mx-1 mx-md-4" onSubmit={ (e) => requestPasswordReset(e) }>
 
                         <div className="d-flex flex-row align-items-center mb-4">
                             <i className="fas fa-user fa-lg me-3 fa-fw"></i>
