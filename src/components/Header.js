@@ -1,5 +1,5 @@
 import React, {useContext} from 'react'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from '../context/AuthContext';
 
 const Header = () => {
@@ -25,7 +25,7 @@ const Header = () => {
             
             {user ? (
                 <div className='d-flex align-items-center' >
-                    <span className='mx-2'>{username}</span>
+                    <Link className='mx-2' to="/profile">{username}</Link>
                     <button type="button" className="btn btn-primary mx-1" onClick={logoutUser}>Logout</button>
                 </div>
             ) : (
