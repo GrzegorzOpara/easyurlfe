@@ -10,25 +10,40 @@ const ProfilePage = () => {
     const [validPassword, setValidPassword] = useState(true)
     const [passwordsMatch, setPasswordsMatch] = useState(true)
 
-    const handleChangeSubmit = (e) => {
+    const handleChangeSubmit = async(e) => {
         e.preventDefault()
         let data = {}
         
         if (e.target.name === "email_change") {
             console.log(e.target.email.value)
-            // let data = {"email":e.target.form.email.value}    
+            data = {"email":e.target.email.value}    
         }
         else if (e.target.name === "password_change") {
             console.log(e.target.password.value)
-            // let data = {"email":e.target.password.value}    
+            data = {"password":e.target.password.value}    
         }
-        
-        //console.log(data)
 
+        console.log(user)
+        
+        let response = await fetch(REACT_APP_API_URL + '/api/users/details/', {
+            method: 'PUT',
+            headers: {
+              'Content-Type':'application/json',
+              'Authorization':'Bearer ' + String(authTokens.access)
+            },
+            body:JSON.stringify(data)
+            })
+            
+            if (response.status === 200) {
+                console.log('User updated!')
+            } 
+            else {
+                console.log('Error updating the user!')
+            }
     }
 
     const deleteUser = async() => {
-        let response = await fetch(REACT_APP_API_URL + '/api/users/details', {
+        let response = await fetch(REACT_APP_API_URL + '/api/users/details/', {
             method: 'DELETE',
             headers: {
             'Content-Type':'application/json',
