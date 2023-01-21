@@ -17,7 +17,7 @@ const HomePage = () => {
   let [editing, setEditing] = useState(false)
   
   // auth
-  let {authTokens, logoutUser} = useContext(AuthContext)
+  let {authTokens, logoutUser, getUserDetails} = useContext(AuthContext)
 
   // filter records by search text
   const filterUrls = useCallback( (event) => {
@@ -136,7 +136,6 @@ const HomePage = () => {
   let editRecord = async(e) => {
     const newRecord = {...editedRecord, [e.target.id]: e.target.value}
     setEditedRecord(newRecord)
-    console.log(editedRecord)
   }
   
   let cancelEdit = async() => {
@@ -145,6 +144,7 @@ const HomePage = () => {
   }
 
   useEffect(() => {
+    getUserDetails()
     getUrls()
     // eslint-disable-next-line
   }, [])  

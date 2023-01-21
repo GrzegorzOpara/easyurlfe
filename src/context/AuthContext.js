@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+// import { async } from "q";
 
 export const AuthContext = createContext()
 export const AuthProvider = ({children}) => {
@@ -10,9 +11,31 @@ export const AuthProvider = ({children}) => {
     let [authTokens, setAuthTokens] = useState(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null)
     let [user, setUser] = useState(() => localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')) : null)
     let [username, setUsername] = useState(() => localStorage.getItem('username') ? localStorage.getItem('username') : null)
+    let [email, setEmail] = useState(() => localStorage.getItem('email') ? localStorage.getItem('email') : null)
     let [loading, setLoading] = useState(true)
 
     const navigate = useNavigate()
+
+    let getUserDetails = async () => {
+        
+        let response = await fetch(REACT_APP_API_URL + '/api/users/details/', {
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json',
+                'Authorization':'Bearer ' + String(authTokens.access)
+            }
+        })
+        
+        let data = await response.json()   
+
+        if (response.status === 200) {
+            localStorage.setItem('email', data.email)
+            setEmail(data.email)
+        }
+        else {
+            console.log('Error getting user details')
+        }
+    }
 
     let loginUser = async (e) => {    
         e.preventDefault()
@@ -49,6 +72,7 @@ export const AuthProvider = ({children}) => {
         setUser(null)
         localStorage.removeItem('authTokens')
         localStorage.removeItem('username')
+        localStorage.removeItem('email')
     }
     
     let updateToken = async () => {
@@ -102,9 +126,11 @@ export const AuthProvider = ({children}) => {
     let contextData = {
         user:user,
         username:username, 
+        email:email,
         loginUser:loginUser,
         logoutUser:logoutUser,
-        authTokens:authTokens
+        authTokens:authTokens,
+        getUserDetails:getUserDetails
     }
 
     return (

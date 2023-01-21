@@ -1,23 +1,23 @@
 import validator from 'validator';
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useState } from "react";
 
 const PasswordChangePage = () => {
-    // API CALL: localhost:8000/api/users/password-reset/NDg/bi13vi-a2bf021b2a11316b59f199f4a9ad5f07/
-    // LINK: localhost:3000/password-chnage/NDg/bi2h8g-cc60025f66395b6fb37b9812229c1aef/
     const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 
     const [validPassword, setValidPassword] = useState(false)
     const [passwordsMatch, setPasswordsMatch] = useState(false)
-    const navigate = useNavigate()
+    const [passwordChangeStatus, setPasswordChangeStatus] = useState(0) // 0 unknow, 1 succeed, 2 failed
 
     let params = useParams();
 
+    const resetPasswordChangeStatus = () => {
+        setPasswordChangeStatus(0)
+    }
+
     const changePassword = async(e) => {
         e.preventDefault()
-
-        console.log(e)
-        
+      
         let response = await fetch(REACT_APP_API_URL + '/api/users/password-reset/' + params.encoded_pk + '/' + params.token + '/', {
           method: 'PATCH',
           headers: {
@@ -29,9 +29,11 @@ const PasswordChangePage = () => {
           await response.json()
     
           if (response.status === 200) {
-            navigate('/login')
+            setPasswordChangeStatus(1)
+            // navigate('/login')
           } else {
-            navigate('/password-reset')
+            setPasswordChangeStatus(2)
+            // navigate('/password-reset')
           }
       }
 
@@ -70,7 +72,7 @@ const PasswordChangePage = () => {
     }
 
     return (
-        <div className="container">
+        <div className="container" onClick={() => resetPasswordChangeStatus()}>
             <div className="row d-flex justify-content-center align-items-center">
             <div className="col-lg-12 col-xl-11">
                 <div className="card text-black">
@@ -100,8 +102,21 @@ const PasswordChangePage = () => {
                             </div>
                         </div>
                         
-                        <div className="d-flex justify-content-center mb-3 mb-lg-4">
-                            <button type="submit" className="btn btn-primary btn-lg" disabled={!(validPassword && passwordsMatch)}>Change password</button>
+                        <div className="flex justify-content-center mb-3 mb-lg-4">
+                            <div className="d-flex justify-content-center container">
+                                <button type="submit" className="btn btn-primary btn-lg" disabled={!(validPassword && passwordsMatch)}>Change password</button>
+                            </div>
+                            {
+                            passwordChangeStatus !== 0 ?
+                            <div className="container">
+                                { passwordChangeStatus === 1 ?
+                                    <p className="text-success mb-1 mx-1 mx-md-3 mt-3">Password successfully changed, you can {<Link to='/login'>login</Link>} now</p>
+                                    :
+                                    <p className="text-warning mb-1 mx-1 mx-md-3 mt-3">Ups! Something went wrong, please try again</p>
+}
+                            </div>
+                            : null
+                            }
                         </div>
 
                         </form>

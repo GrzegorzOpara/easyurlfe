@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import CreateUserPage from './pages/CreateUserPage';
 import WelcomePage from './pages/WelcomePage';
 import LoginPage from './pages/LoginPage'
+import ProfilePage from './pages/ProfilePage'
 import PasswordResetPage from './pages/PasswordResetPage';
 import PasswordChangePage from './pages/PasswordChangePage';
 
@@ -20,6 +21,7 @@ function App() {
           <Routes>
             <Route element={<PrivateRoutes/>}>
               <Route path="/" exact element={<HomePage />} />
+              <Route path="/profile" exact element={<ProfilePage />} />
             </Route>
             <Route path="/welcome" element={<WelcomePage />}/>
             <Route path="/create" element={<CreateUserPage />}/>
