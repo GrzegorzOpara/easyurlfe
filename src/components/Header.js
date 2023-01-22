@@ -14,7 +14,7 @@ const Header = () => {
     }
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar navbar-expand-lg sticky-top navbar-light bg-light">
             <div className='d-flex container align-items-center justify-content-between'>
                 <div className="navbar-brand" onClick={() => handleButtonClick()}>
                     <div className="d-flex align-items-center">

@@ -27,7 +27,7 @@ const UrlTable = ({filteredUrls, deleteUrl, setEditedRecord, setEditing}) => {
                 <td>
                   <div className="d-flex">
                     <button className="btn btn-outline-danger mx-1" type="submit" onClick={() => deleteUrl(url.id)}>delete</button>
-                    <button className="btn btn-outline-warning mx-1" type="submit" onClick={() => {setEditedRecord(url); setEditing(true)}}>edit</button>
+                    <button className="btn btn-outline-warning mx-1" type="submit" onClick={() => {setEditedRecord(url); setEditing(true); window.scrollTo({top: 0, left: 0, behavior: 'smooth'});}}>edit</button>
                   </div>
                 </td>
                 <td>{url.url_desc}</td>
